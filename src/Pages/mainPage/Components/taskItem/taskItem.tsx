@@ -31,6 +31,7 @@ export const TaskItem: React.FC<ITaskItemProp>  = ({task, color}) => {
   const { _id, text, date, subLevel } = task;
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode | null>(null);
+  
 
   const formattedDate = formatToString(date);
     

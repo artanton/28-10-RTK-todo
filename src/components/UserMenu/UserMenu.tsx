@@ -1,24 +1,25 @@
-import { useDispatch } from 'react-redux';
+// import { logout } from '../../redux/auth/operators';
+// import { useDispatch } from 'react-redux';
+// import { AppDispatch } from '../../redux/store';
 import { useAuth } from '../../Hooks/useAuth';
 import { LogOutButton, LogOutMenu, Name, UserAvatar } from './UserMenuStyled';
-import { logout } from '../../redux/auth/operators';
 import { FC, useState } from 'react';
 import { Modal } from '../../Pages/mainPage/Components/modal/modalWindow';
 import { UserSettings } from './component/userSettings/userSettings';
-import { AppDispatch } from '../../redux/store';
 import { IUser } from '../../helper/Auth.types';
+import { useLogoutMutation } from '../../redux/auth/sliceApi';
 
 
 const baseURL = `${process.env.REACT_APP_API_URL}`
 // const baseURL = 'https://recursive-todo-api-1.onrender.com'
 
 export const UserMenu: FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
   const { user } = useAuth()as { user: IUser };
   // console.log(store.getState());
   const [showModal, setShowModal] = useState(false);
   //   const [modalContent, setModalContent] = useState<React.ReactNode | null>(null);
-
+  const [logout]= useLogoutMutation();
   const closeModal = () => {
       setShowModal(false);
     };
@@ -45,7 +46,7 @@ export const UserMenu: FC = () => {
           <UserAvatar src={`${baseURL}/${user.avatarURL}`} alt="userPhoto" onClick = {openUserModal}  />
         )}
       </span>
-      <LogOutButton to = "/" type="button" onClick={() => dispatch(logout())}>
+      <LogOutButton to = "/" type="button" onClick={logout}>
         Logout
       </LogOutButton>
       <Modal isOpen={showModal} onClose={closeModal}>

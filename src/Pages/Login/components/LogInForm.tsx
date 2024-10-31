@@ -8,12 +8,15 @@ import {
   FormStyled,
   IconButton
 } from '../../Register/components/RegisterFormStyled';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../redux/store';
+// import { useDispatch } from 'react-redux';
+// import { AppDispatch } from '../../../redux/store';
+// import { login } from '../../../redux/auth/operators';
 
-import { login } from '../../../redux/auth/operators';
 import { useState } from 'react';
 import { IoEye, IoEyeOffOutline } from 'react-icons/io5';
+import { useLoginMutation } from '../../../redux/auth/sliceApi';
+
+
 
 const userSchema = Yup.object().shape({
   email: Yup.string()
@@ -26,9 +29,11 @@ const userSchema = Yup.object().shape({
 });
 
 export const LoginForm = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const [login]= useLoginMutation();
+  // const dispatch = useDispatch<AppDispatch>();
+  // useLoginMutation().
+  
   const [showPassword, setShowPassword] = useState(false);
-
   const swapPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -38,16 +43,17 @@ export const LoginForm = () => {
     password: string;
   }
 
-  const handleSubmit = (
+  const handleSubmit = async(
     values: {email: string, password: string},
     actions: FormikHelpers<LogValues>
   ) => {
-    dispatch(
+   
+    
       login({
         email:values.email.toLowerCase(),
         password: values.password,
       })
-    );
+    
 
     actions.resetForm();
   };
