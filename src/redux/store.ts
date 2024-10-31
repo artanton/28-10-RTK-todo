@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { taskReducer } from './tasks/TaskSlice';
 import { authReducer } from './auth/AuthSlice';
-import {
-  persistStore,
-  // persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
+// import {
+//   persistStore,
+//   // persistReducer,
+//   FLUSH,
+//   REHYDRATE,
+//   PAUSE,
+//   PERSIST,
+//   PURGE,
+//   REGISTER,
+// } from 'redux-persist';
 // import storage from 'redux-persist/lib/storage';
 import { generalApi } from './auth/sliceApi';
 // import { setupAxiosInterceptors } from '../helper/axiosInterceptr';

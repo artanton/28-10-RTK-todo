@@ -2,13 +2,15 @@ import {
   createApi,
   //  fetchBaseQuery 
   } from '@reduxjs/toolkit/query/react';
-import { IAuthState, IUser } from '../../helper/Auth.types';
+import { 
+  // IAuthState,
+  IUser } from '../../helper/Auth.types';
 import {
   refreshUser,
   removeUser,
   setUser,
   createUser,
-  regenerateToken,
+  // regenerateToken,
 } from './AuthSlice';
 
 import { customFetchBase } from '../../helper/authMutex';
