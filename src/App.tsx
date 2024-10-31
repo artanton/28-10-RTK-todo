@@ -1,12 +1,14 @@
-import { lazy, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import { lazy,
+  //  useEffect
+  } from 'react';
+// import {useDispatch} from 'react-redux';
+// import { AppDispatch} from './redux/store';
+// import { useAuth } from './Hooks/useAuth';
 import { Route, Routes } from 'react-router-dom';
 import { AppLayout } from './AppLauout';
 import { PrivateRoute } from './Routes/PrivatRoute';
 import { RestrictedRoute } from './Routes/ResrtrictedRoute';
 
-import { AppDispatch} from './redux/store';
-import { useAuth } from './Hooks/useAuth';
 // import NotFoundPage from './Pages/NotFoundPage/NotFoundPage';
 
 import { MagnifyingGlass } from 'react-loader-spinner';
