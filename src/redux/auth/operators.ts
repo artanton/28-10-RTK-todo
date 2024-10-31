@@ -22,8 +22,8 @@ interface IPasswordSet {
   newPassword?: string;
 }
 
-const setAuthHeader = (accessToken: string) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+const setAuthHeader = () => {
+  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
 };
 
 const clearAuthHeader = () => {
@@ -58,7 +58,8 @@ export const login = createAsyncThunk<
     const response = await axios.post('/users/login', creds, {
       withCredentials: true,
     });
-    setAuthHeader(response.data.accessToken);
+    // setAuthHeader(response.data.accessToken);
+    setAuthHeader ();
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -72,6 +73,7 @@ export const logout = createAsyncThunk<void, void, { rejectValue: string }>(
   'auth/logout',
   async (_, thunkAPI) => {
     try {
+      setAuthHeader ();
       await axios.post('/users/logout', {
         withCredentials: true,
         credentials: 'include',
@@ -91,6 +93,7 @@ export const refreshUser = createAsyncThunk<
   void,
   { rejectValue: string }
 >('auth/refresh', async (_, thunkAPI) => {
+  
   const state = thunkAPI.getState() as RootState;
   const persistedToken = state.auth.accessToken;
   if (!persistedToken) {
@@ -98,7 +101,7 @@ export const refreshUser = createAsyncThunk<
   }
 
   try {
-    setAuthHeader(persistedToken);
+    setAuthHeader();
     const response = await axios.get('/users/current');
     return response.data;
   } catch (error) {
@@ -121,7 +124,7 @@ export const regenerateTokens = createAsyncThunk(
         }
       );
       
-      setAuthHeader(response.data.accessToken);
+      setAuthHeader();
       return { user:response.data.user, accessToken: response.data.accessToken };
     } catch (error) {
       if (axios.isAxiosError(error))

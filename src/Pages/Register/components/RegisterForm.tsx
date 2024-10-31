@@ -8,16 +8,16 @@ import {
   FormStyled,
   IconButton,
 } from './RegisterFormStyled';
-import { useDispatch } from 'react-redux';
-
-import { register } from '../../../redux/auth/operators';
+// import { useDispatch } from 'react-redux';
+// import { AppDispatch } from '../../../redux/store';
+// import { register } from '../../../redux/auth/operators';
 
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 
 import { IoEye, IoEyeOffOutline } from 'react-icons/io5';
-import { AppDispatch } from '../../../redux/store';
+import { useRegisterMutation } from '../../../redux/auth/sliceApi';
 
 interface RegValues {
   name: string;
@@ -43,7 +43,8 @@ const userSchema = Yup.object().shape({
 });
 
 export const RegisterForm = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
+  const [register]=useRegisterMutation();
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -64,7 +65,7 @@ export const RegisterForm = () => {
       password: values.password,
     };
     try {
-      await dispatch( register(registerData) ).unwrap();
+      await  register(registerData).unwrap();
       navigate(`/login`);
    
       

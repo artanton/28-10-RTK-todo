@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ITask } from '../../helper/Task.types';
 
 
+
 axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}/api`
 // axios.defaults.baseURL = 'https://recursive-todo-api-1.onrender.com/api'
 
@@ -15,10 +16,19 @@ axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}/api`
 // axios.defaults.baseURL = 'https://recurcieve-todolist-nest-typeorm-api.onrender.com'; //nest-typeORM-mongoDB
 // axios.defaults.baseURL = 'https://recurcieve-todo-nest-prisma-mongo.onrender.com'; //nest-prisma-mongoDB
 
+// const setAuthHeader = () => 
+//   axios.defaults.headers.common.Authorization = `Bearer ${persistedToken()}`;
+// ;
+const setAuthHeader = () => {
+  axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
+};
+
+
 export const fetchTasks = createAsyncThunk<ITask[]>(
   'tasks/fetchAll',
   async (_, thunkAPI) => {
     try {
+      setAuthHeader ();
       const response = await axios.get('/tasks');
 
       return response.data;
@@ -38,6 +48,7 @@ export const addTask = createAsyncThunk<
   { rejectValue: string }
 >('tasks/addTask', async ({ text, date, parentId, subLevel }, thunkAPI) => {
     try {
+    
     const response = await axios.post('/tasks', {
       text,
       date,

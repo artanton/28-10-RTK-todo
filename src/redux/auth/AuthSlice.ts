@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   login,
   logout,
-  refreshUser,
+  // refreshUser,
   regenerateTokens,
   register,
   resendVerify,
@@ -12,7 +12,6 @@ import {
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { IAuthState } from '../../helper/Auth.types';
 
-
 export const initialState: IAuthState = {
   user: {
     email: null,
@@ -20,23 +19,65 @@ export const initialState: IAuthState = {
     avatarURL: null,
     verify: false,
   },
-  
+
   accessToken: null,
   isLoggedIn: false,
   isRefreshing: false,
   authError: null,
-  isLoading: false
+  isLoading: false,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    createUser: (state, action) => {
+      state.user = action.payload.user;
+      Notify.success(
+        'Verification code sent to your email. Verify your email to SignIn.'
+      );
+    },
+    setUser: (state, action) => {
+      state.isRefreshing = false;
+      state.authError = null;
+      state.isLoggedIn = true;
+      state.accessToken = action.payload.accessToken;
+      state.user = action.payload.user;
+    },
+    removeUser: state => {
+      state.isRefreshing = false;
+      state.user = {
+        name: null,
+        email: null,
+        avatarURL: null,
+        verify: false,
+      };
+      state.accessToken = null;
+      state.isLoggedIn = false;
+    },
+    refreshUser: (state, action) => {
+      state.user = {
+        name: action.payload.name,
+        email: action.payload.email,
+        avatarURL: action.payload.avatarURL,
+        verify: action.payload.verify,
+      };
+      state.isLoggedIn = true;
+      state.isRefreshing = false;
+      state.authError = null;
+    },
+    regenerateToken:(state, action)=>{
+      state.user = action.payload.user;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+        state.accessToken = action.payload.accessToken;
+    }
+  },
   extraReducers: builder => {
     builder
-    .addCase(register.pending, (state, action) => {
-      state.isRefreshing = true;
-    })
+      .addCase(register.pending, (state, action) => {
+        state.isRefreshing = true;
+      })
       .addCase(register.fulfilled, (state, action) => {
         state.isRefreshing = false;
         state.authError = null;
@@ -67,12 +108,11 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isRefreshing = false;
         state.authError = action.payload as string;
-        state.user.email= action.meta.arg.email as string;
+        state.user.email = action.meta.arg.email as string;
         Notify.failure((action.payload as string) || 'Login failed');
       })
       .addCase(logout.pending, state => {
         state.isRefreshing = true;
-        
       })
       .addCase(logout.fulfilled, state => {
         state.isRefreshing = false;
@@ -85,30 +125,30 @@ const authSlice = createSlice({
         state.accessToken = null;
         state.isLoggedIn = false;
       })
-      .addCase(refreshUser.pending, state => {
-        state.isRefreshing = true;
-        state.user.email= null;
-        state.authError = null;
-      })
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isLoggedIn = true;
-        state.isRefreshing = false;
-        state.authError = null;
-      })
-      .addCase(refreshUser.rejected, (state, action) => {
-        state.isRefreshing = false;
-        state.authError = action.payload as string;
-        if (state.isLoggedIn)
-          Notify.failure((action.payload as string) || 'Unable to find user');
-        // state.isLoggedIn = false;
-      })
+      // .addCase(refreshUser.pending, state => {
+      //   state.isRefreshing = true;
+      //   state.user.email= null;
+      //   state.authError = null;
+      // })
+      // .addCase(refreshUser.fulfilled, (state, action) => {
+      //   state.user = action.payload;
+      //   state.isLoggedIn = true;
+      //   state.isRefreshing = false;
+      //   state.authError = null;
+      // })
+      // .addCase(refreshUser.rejected, (state, action) => {
+      //   state.isRefreshing = false;
+      //   state.authError = action.payload as string;
+      //   if (state.isLoggedIn)
+      //     Notify.failure((action.payload as string) || 'Unable to find user');
+      //   // state.isLoggedIn = false;
+      // })
       .addCase(regenerateTokens.pending, state => {
         state.isRefreshing = true;
         state.authError = null;
         state.isLoggedIn = false;
       })
-      .addCase(regenerateTokens.fulfilled, (state, action:any) => {
+      .addCase(regenerateTokens.fulfilled, (state, action: any) => {
         state.user = action.payload.user;
         state.isLoggedIn = true;
         state.isRefreshing = false;
@@ -116,15 +156,15 @@ const authSlice = createSlice({
       })
       .addCase(regenerateTokens.rejected, (state, action) => {
         state.isRefreshing = false;
-        state.user= initialState.user;
+        state.user = initialState.user;
         state.isLoggedIn = false;
         state.accessToken = null;
         if (state.isLoggedIn)
           Notify.failure((action.payload as string) || 'Unable to find user');
       })
-    
+
       .addCase(resendVerify.fulfilled, (state, action) => {
-        state.user.email= null;
+        state.user.email = null;
         state.authError = null;
         Notify.success(
           'Verification code sent to your email. Verify your email to SignIn.'
@@ -140,22 +180,20 @@ const authSlice = createSlice({
       })
       .addCase(updatePassword.rejected, (state, action) => {
         state.authError = action.payload as string;
-        Notify.failure((action.payload as string) || 'Something went wrong');  
+        Notify.failure((action.payload as string) || 'Something went wrong');
       })
-      .addCase(updateAvatar.fulfilled, (state, action) => { 
+      .addCase(updateAvatar.fulfilled, (state, action) => {
         state.authError = null;
-        state.user.avatarURL = action.payload 
-        Notify.success("New photo upload success");
+        state.user.avatarURL = action.payload;
+        Notify.success('New photo upload success');
       })
       .addCase(updateAvatar.rejected, (state, action) => {
         state.authError = action.payload as string;
         Notify.failure((action.payload as string) || 'Something went wrong');
       });
-
   },
 });
 
+export const { setUser, removeUser, refreshUser, createUser, regenerateToken } = authSlice.actions;
+
 export const authReducer = authSlice.reducer;
-
-
-

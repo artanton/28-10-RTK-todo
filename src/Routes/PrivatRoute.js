@@ -1,5 +1,7 @@
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../Hooks/useAuth';
+// import { useRefreshQuery } from '../redux/auth/sliceApi';
+import { useAuth } from '../Hooks';
+
 
 // interface PrivateRouteProps {
 //   component: React.ComponentType;
@@ -11,8 +13,9 @@ import { useAuth } from '../Hooks/useAuth';
   component: Component,
   redirectTo = '/',
 }) => {
-  const { isLoggedIn, isRefreshing } = useAuth();
+  const {isLoggedIn, isRefreshing}= useAuth();
+  // const {isLoading} =useRefreshQuery();
   const shouldRedirect = !isLoggedIn && !isRefreshing;
-
+  
   return shouldRedirect ? <Navigate to={redirectTo} /> : <Component/>;
 };

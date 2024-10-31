@@ -3,7 +3,7 @@ import { taskReducer } from './tasks/TaskSlice';
 import { authReducer } from './auth/AuthSlice';
 import {
   persistStore,
-  persistReducer,
+  // persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -11,37 +11,38 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+// import storage from 'redux-persist/lib/storage';
+import { generalApi } from './auth/sliceApi';
 // import { setupAxiosInterceptors } from '../helper/axiosInterceptr';
 // import authMiddleware from '../helper/authMiddlware';
 
-const authPersistConfig ={
-  key: 'auth',
-  storage,
-  whitelist: ['accessToken'],
-}
-const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+// const authPersistConfig ={
+//   key: 'accessToken',
+//   storage,
+//   whitelist: ['accessToken'],
+// }
+// const persistedAuthReducer = persistReducer(authPersistConfig,  authReducer);
 
 
 
 export const store = configureStore({
   reducer: {
-    auth: persistedAuthReducer,
-    // auth: authReducer,
+    auth: authReducer,
     task: taskReducer,
+    [generalApi.reducerPath]:generalApi.reducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
+      // serializableCheck: {
+      //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      // },
     })
-    // .concat(authMiddleware)
+   .concat(generalApi.middleware)
     ,
     devTools: process.env.NODE_ENV === 'development',
 });
 
-export const persistor= persistStore (store);
+// export const persistor= persistStore (store);
 
 
 // const waitForRehydration = new Promise<void>((resolve) => {
@@ -60,3 +61,4 @@ export const persistor= persistStore (store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
