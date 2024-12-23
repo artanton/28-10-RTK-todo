@@ -113,13 +113,13 @@ export const refreshUser = createAsyncThunk<
   }
 });
 
-export const regenerateTokens = createAsyncThunk(
-  'auth/regenerate',
+export const refreshTokens = createAsyncThunk(
+  'users/refresh',
   async (_, thunkAPI) => {
     try {
       
       const response = await axios.patch(
-        'users/regenerate', {},{
+        'users/refresh', {},{
           withCredentials: true,
         }
       );

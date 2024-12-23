@@ -7,6 +7,7 @@ import {
 import { Mutex } from 'async-mutex';
 import { removeUser } from '../redux/auth/AuthSlice';
 const defaultURL = `${process.env.REACT_APP_API_URL}/api/users`;
+console.log('defaultURL', defaultURL);
 
 const baseQuery = fetchBaseQuery({
   baseUrl: defaultURL,
@@ -35,27 +36,37 @@ export const customFetchBase: BaseQueryFn<
       const release = await mutex.acquire();
 
       try {
-        const refreshToken = localStorage.getItem('refreshToken');
-        if (!refreshToken) {
-          api.dispatch(removeUser());
-        }
+        // const refreshToken = localStorage.getItem('refreshToken');
+        // if (!refreshToken) {
+        //   api.dispatch(removeUser());
+        // }
+        console.log(await baseQuery(
+          {
+            credentials: 'include',
+            url: '/refresh',
+            method: 'GET',
+            
+          },
+          api,
+          extraOptions
+        ));
 
         const { data } = await baseQuery(
           {
             credentials: 'include',
-            url: '/regenerate',
+            url: '/refresh',
             method: 'GET',
             
           },
           api,
           extraOptions
         );
+        // console.log(data);
         
         if(data){
-        const token = (data as any).accessToken;
-
+        const accessToken = (data as any).accessToken;
         
-          localStorage.setItem('accessToken', token);
+          localStorage.setItem('accessToken',  accessToken);
           result = await baseQuery(args, api, extraOptions);
         } else {
           localStorage.removeItem('accessToken');

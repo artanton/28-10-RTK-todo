@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { regenerateTokens } from '../redux/auth/operators';
+import { refreshTokens } from '../redux/auth/operators';
 
 export const setupAxiosInterceptors = (store: any) => {
   axios.interceptors.response.use(
@@ -14,7 +14,7 @@ export const setupAxiosInterceptors = (store: any) => {
 
         try {
           if (store) {
-            await store.dispatch(regenerateTokens());
+            await store.dispatch(refreshTokens());
             console.log(originalRequest);
             return axios(originalRequest);
           }

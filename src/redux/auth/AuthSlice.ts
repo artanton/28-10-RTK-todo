@@ -3,7 +3,7 @@ import {
   login,
   logout,
   // refreshUser,
-  regenerateTokens,
+  refreshTokens,
   register,
   resendVerify,
   updateAvatar,
@@ -143,18 +143,18 @@ const authSlice = createSlice({
       //     Notify.failure((action.payload as string) || 'Unable to find user');
       //   // state.isLoggedIn = false;
       // })
-      .addCase(regenerateTokens.pending, state => {
+      .addCase(refreshTokens.pending, state => {
         state.isRefreshing = true;
         state.authError = null;
         state.isLoggedIn = false;
       })
-      .addCase(regenerateTokens.fulfilled, (state, action: any) => {
+      .addCase(refreshTokens.fulfilled, (state, action: any) => {
         state.user = action.payload.user;
         state.isLoggedIn = true;
         state.isRefreshing = false;
         state.accessToken = action.payload.accessToken;
       })
-      .addCase(regenerateTokens.rejected, (state, action) => {
+      .addCase(refreshTokens.rejected, (state, action) => {
         state.isRefreshing = false;
         state.user = initialState.user;
         state.isLoggedIn = false;

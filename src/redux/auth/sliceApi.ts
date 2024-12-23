@@ -126,6 +126,7 @@ export const generalApi = createApi({
     //   },
     // }),
 
+    
     logout: builder.mutation({
       query: () => ({
         url: '/logout',
