@@ -1,21 +1,24 @@
-import { 
+import {
   createApi,
-  //  fetchBaseQuery 
-  } from '@reduxjs/toolkit/query/react';
-import { 
+  //  fetchBaseQuery
+} from '@reduxjs/toolkit/query/react';
+import {
   // IAuthState,
-  IUser } from '../../helper/Auth.types';
+  IUser,
+} from '../../helper/Auth.types';
 import {
   refreshUser,
   removeUser,
   setUser,
   createUser,
+  updatePassword,
+  updateAvatar,
+  resendVerify,
   // regenerateToken,
 } from './AuthSlice';
 
 import { customFetchBase } from '../../helper/authMutex';
-import { Notify } from 'notiflix';
-// import { Notify } from 'notiflix';
+import { errorHandler } from '../../helper/helper';
 // import { persistedToken } from '../../helper/helper';
 
 // const defaultURL = `${process.env.REACT_APP_API_URL}/api/users`;
@@ -47,8 +50,8 @@ export const generalApi = createApi({
           if (data) {
             lifecycleApi.dispatch(createUser(data));
           }
-        } catch (error: any ) {
-          Notify.failure(error?.error?.data?.message as string)
+        } catch (error: any) {
+          errorHandler(error);
         }
       },
     }),
@@ -67,9 +70,11 @@ export const generalApi = createApi({
 
             localStorage.setItem('accessToken', data.accessToken);
           }
-        } catch (error:any) {        
-         
-          Notify.failure(error?.error?.data?.message as string)
+        } catch (error: any) {
+          const message = error?.error?.data?.message;
+          const email = creds.email;
+          lifecycleApi.dispatch(setUser({ message, email }));
+          errorHandler(error);
         }
       },
     }),
@@ -79,54 +84,83 @@ export const generalApi = createApi({
         return {
           url: '/current',
           method: 'GET',
-          // headers: {
-          //   authorization: `Bearer ${token}`,
-          // },
         };
       },
       async onQueryStarted(arg, lifecycleApi) {
-        // const { data } = await lifecycleApi.queryFulfilled;
-        // lifecycleApi.dispatch(refreshUser(data));
         try {
           const { data } = await lifecycleApi.queryFulfilled;
           if (data) {
             lifecycleApi.dispatch(refreshUser(data));
           }
         } catch (error: any) {
-          if (error.error.status=== 401) {
-           
-            // lifecycleApi.dispatch(generalApi.endpoints.regenerate.initiate());
+          if (error.error.status !== 401) {
+            errorHandler(error);
           }
         }
       },
     }),
 
-    // regenerate: builder.query<IAuthState, void>({
-    //   query: () => {
-    //     return {
-    //       url: '/regenerate',
-    //       method: 'GET',
-    //       withCredentials: true,
-    //     };
-    //   },
+    updatePassword: builder.mutation({
+      query: creds => {
+        return {
+          url: '/update',
+          method: 'PATCH',
+          body: creds,
+        };
+      },
+      async onQueryStarted(creds, lifecycleApi) {
+        try {
+          const { data } = await lifecycleApi.queryFulfilled;
+          if (data) {
+            lifecycleApi.dispatch(updatePassword(data));
+          }
+        } catch (error: any) {
+          errorHandler(error);
+        }
+      },
+    }),
 
-    //   async onQueryStarted(arg, lifecycleApi) {
-    //     try {
-    //       const { data } = await lifecycleApi.queryFulfilled;
-    //       if (data) {
-    //         lifecycleApi.dispatch(regenerateToken(data));
-    //         localStorage.setItem('accessToken', data.accessToken as string);
-    //       }
-    //     } catch (error:any) {
-    //        if (error.error.status=== 401 ) {
-            
-    //         lifecycleApi.dispatch(removeUser());
-    //       }
-    //     }
-    //   },
-    // }),
+    updateAvatar: builder.mutation({
+      query: formData => {
+        return {
+          url: '/avatar',
+          method: 'PATCH',
+          body: formData,
+          formData: true,
+        };
+      },
+      async onQueryStarted(formData, lifecycleApi) {
+        try {
+          const { data } = await lifecycleApi.queryFulfilled;
+          if (data) {
+            lifecycleApi.dispatch(updateAvatar(data));
+          }
+        } catch (error: any) {
+          errorHandler(error);
+        }
+      },
+    }),
 
-    
+    resendVerify: builder.mutation({
+      query: email => {
+        return {
+          url: '/verify',
+          method: 'POST',
+          body: { email },
+        };
+      },
+      async onQueryStarted(email, lifecycleApi) {
+        try {
+          const data = await lifecycleApi.queryFulfilled;
+          if (data) {
+            lifecycleApi.dispatch(resendVerify(email));
+          }
+        } catch (error: any) {
+          errorHandler(error);
+        }
+      },
+    }),
+
     logout: builder.mutation({
       query: () => ({
         url: '/logout',
@@ -140,7 +174,7 @@ export const generalApi = createApi({
 
           localStorage.setItem('accessToken', '');
         } catch (error: any) {
-          Notify.failure(error?.error?.data?.message as string)
+          errorHandler(error);
         }
       },
     }),
@@ -151,5 +185,7 @@ export const {
   useRegisterMutation,
   useLoginMutation,
   useLogoutMutation,
-  
+  useUpdatePasswordMutation,
+  useUpdateAvatarMutation,
+  useResendVerifyMutation,
 } = generalApi;
