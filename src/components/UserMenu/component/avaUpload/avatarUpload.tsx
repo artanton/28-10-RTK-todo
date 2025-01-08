@@ -1,7 +1,6 @@
 import { Notify } from 'notiflix';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateAvatar } from '../../../../redux/auth/operators';
+// import { useDispatch } from 'react-redux';
 import { useAuth } from '../../../../Hooks';
 import * as yup from 'yup';
 import {IUser } from '../../../../helper/Auth.types'
@@ -12,15 +11,16 @@ import {
   SubmitButton 
 } from './avatarUploadStyled';
 import { Formik, Form, ErrorMessage} from 'formik';
-import { AppDispatch } from '../../../../redux/store';
+// import { AppDispatch } from '../../../../redux/store';
+import { useUpdateAvatarMutation } from '../../../../redux/auth/sliceApi';
 
 const baseURL = process.env.REACT_APP_API_URL;
 // const baseURL = 'https://recursive-todo-api-1.onrender.com'
 
 export const AvatarUpload = () => {
 
-
-  const dispatch = useDispatch<AppDispatch>();
+const [updateAvatar] =useUpdateAvatarMutation();
+  // const dispatch = useDispatch<AppDispatch>();
   const { user } = useAuth()as { user: IUser };
   
   let prevAvatar="";
@@ -52,7 +52,7 @@ export const AvatarUpload = () => {
     const formData = new FormData();
     formData.append('avatarURL', imageFile);
 
-    dispatch(updateAvatar(formData));
+    updateAvatar(formData);
     
     
   };

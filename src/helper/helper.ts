@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix';
 import type { ITask } from './Task.types';
 
 //  parentId grouping func
@@ -40,14 +41,15 @@ export function formatToString(date: string): string {
 //     .padStart(6, 0)}`;
 // }
 export function getRandomHexColor(): string {
+  //making random numbers for light colors
   const getRandomChannelValue = () => Math.floor(Math.random() * 128) + 128;
 
-  // Генерация значений для каждого канала цвета
+  
   const r = getRandomChannelValue();
   const g = getRandomChannelValue();
   const b = getRandomChannelValue();
 
-  // Преобразование в формат HEX
+  // create HEX format
   const rgbToHex = (r: number, g: number, b: number): string =>
     `#${[r, g, b].map(value => value.toString(16).padStart(2, '0')).join('')}`;
 
@@ -76,6 +78,12 @@ export const rootEl = (tasks: ITask[]): string | null => {
   idArr.sort((a, b) => a.localeCompare(b));
 
   return idArr[0] !== undefined ? idArr[0] : null;
+};
+
+//Error handler
+export const errorHandler = (error: any) => {
+  const message = error?.error?.data?.message as string;
+  Notify.failure(message || 'Somethng went wrong');
 };
 
 

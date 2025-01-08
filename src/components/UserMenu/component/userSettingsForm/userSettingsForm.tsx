@@ -8,14 +8,15 @@ import {
   FormStyled,
   IconButton,
 } from './userSettingsFormStyled';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../../../redux/store';
+// import { useDispatch } from 'react-redux';
+// import { AppDispatch } from '../../../../redux/store';
 
-import { updatePassword } from '../../../../redux/auth/operators';
+// import { updatePassword } from '../../../../redux/auth/operators';
 
 import { useState } from 'react';
 
 import { IoEye, IoEyeOffOutline } from 'react-icons/io5';
+import { useUpdatePasswordMutation } from '../../../../redux/auth/sliceApi';
 
 interface ChangePassValues {
   oldPassword: string;
@@ -38,7 +39,8 @@ const userUpdateSchema = Yup.object().shape({
 });
 
 export const UserSettingsForm = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
+  const [updatePassword] = useUpdatePasswordMutation();
 
   const [showActualPassword, setActualShowPassword] = useState(false);
   const [showNewPassword, setNewShowPassword] = useState(false);
@@ -58,12 +60,11 @@ export const UserSettingsForm = () => {
     values:ChangePassValues, 
     actions:FormikHelpers<ChangePassValues>
   ) => {
-     dispatch(
+     
       updatePassword({
         oldPassword: values.oldPassword,
         newPassword: values.newPassword,
-      })
-    );
+      });
     actions.resetForm();
   };
 

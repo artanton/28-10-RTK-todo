@@ -14,7 +14,7 @@ const styles = {
     },
   };
   
- const NotFoundPage:FC =()=>{
+ const NotFoundPage:React.FC =()=>{
     return (
       <div style={styles.container}>
         <h1

@@ -5,7 +5,8 @@ import {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
 import { Mutex } from 'async-mutex';
-import { removeUser } from '../redux/auth/AuthSlice';
+import { refreshToken, removeUser } from '../redux/auth/AuthSlice';
+import { IrefreshToken } from './Auth.types';
 const defaultURL = `${process.env.REACT_APP_API_URL}/api/users`;
 
 const baseQuery = fetchBaseQuery({
@@ -35,31 +36,31 @@ export const customFetchBase: BaseQueryFn<
       const release = await mutex.acquire();
 
       try {
-        const refreshToken = localStorage.getItem('refreshToken');
-        if (!refreshToken) {
-          api.dispatch(removeUser());
-        }
-
-        const { data } = await baseQuery(
+        // const refreshToken = localStorage.getItem('refreshToken');
+        // if (!refreshToken) {
+        //   api.dispatch(removeUser());
+        // }
+       const { data } = await baseQuery(
           {
             credentials: 'include',
-            url: '/regenerate',
+            url: '/refresh',
             method: 'GET',
             
           },
           api,
           extraOptions
         );
-        
+                
         if(data){
-        const token = (data as any).accessToken;
-
-        
-          localStorage.setItem('accessToken', token);
+        const accessToken = (data as IrefreshToken).accessToken;
+        const user = (data as IrefreshToken).user;
+        api.dispatch(refreshToken(user))
+          localStorage.setItem('accessToken',  accessToken);
           result = await baseQuery(args, api, extraOptions);
         } else {
           localStorage.removeItem('accessToken');
           api.dispatch(removeUser());
+         
         }
       } finally {
         release();

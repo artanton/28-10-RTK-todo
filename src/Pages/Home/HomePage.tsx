@@ -5,7 +5,7 @@ import { Greating, HomePageContainer } from "./HomePageStyled";
 
 
 
-export default function Home() {
+const Home=()=> {
   // const {data: user} = useRefreshQuery()
   const { user } = useAuth()as { user: IUser };
 
@@ -21,4 +21,4 @@ export default function Home() {
       </HomePageContainer>
     );
   }
-  
+  export default Home
