@@ -2,7 +2,11 @@
 
 // import { deleteTask} from '../../../../../redux/tasks/operators';
 
-import { ButtonContainer, DeleteModalContent, ModalButton } from './deleteModalWindowStyled';
+import {
+  ButtonContainer,
+  DeleteModalContent,
+  ModalButton,
+} from './deleteModalWindowStyled';
 import { FC } from 'react';
 import { IdeleteTaskModal } from '../../../../../helpers/Task.types';
 import { useDeleteTaskMutation } from '../../../../../redux/sliceApi';
@@ -16,7 +20,7 @@ export const DeleteConfirmationModal: FC<IdeleteTaskModal> = ({
   const [deleteTask] = useDeleteTaskMutation();
   const handleDelete = async (): Promise<void> => {
     try {
-      await deleteTask(_id)
+      await deleteTask(_id);
 
       // dispatch(fetchTasks());
     } catch (error) {
@@ -28,7 +32,9 @@ export const DeleteConfirmationModal: FC<IdeleteTaskModal> = ({
 
   return (
     <DeleteModalContent>
-      <p style={{textAlign :'center'}}>Are you sure you want to delete this task?</p>
+      <p style={{ textAlign: 'center' }}>
+        Are you sure you want to delete this task?
+      </p>
       <ButtonContainer>
         <ModalButton onClick={handleDelete}>Yes</ModalButton>
         <ModalButton onClick={onClose}>No</ModalButton>

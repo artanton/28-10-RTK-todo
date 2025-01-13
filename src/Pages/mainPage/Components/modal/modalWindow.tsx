@@ -3,10 +3,9 @@ import { FC, useEffect } from 'react';
 import { MdClose } from 'react-icons/md';
 import { IgeneralModal } from '../../../../helpers/Task.types';
 
-
-export const Modal:FC<IgeneralModal> = ({ isOpen, onClose, children }) => {
+export const Modal: FC<IgeneralModal> = ({ isOpen, onClose, children }) => {
   useEffect(() => {
-    const closeModalOnEsc =( e:KeyboardEvent) => {
+    const closeModalOnEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
       }
@@ -18,7 +17,9 @@ export const Modal:FC<IgeneralModal> = ({ isOpen, onClose, children }) => {
     };
   }, [onClose]);
 
-  const closeModalOnBackdrop = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const closeModalOnBackdrop = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
@@ -27,7 +28,7 @@ export const Modal:FC<IgeneralModal> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
-    <ModalOverlay  style={{ zIndex: 10 }} onClick={closeModalOnBackdrop}>
+    <ModalOverlay style={{ zIndex: 10 }} onClick={closeModalOnBackdrop}>
       <ModalContent style={{ zIndex: 10 }}>
         <CloseButton onClick={onClose}>
           <MdClose style={{ color: 'red' }} />

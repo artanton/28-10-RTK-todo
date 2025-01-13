@@ -6,7 +6,7 @@ export const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,8 +26,7 @@ export const TextInput = styled.textarea`
   padding: 10px;
   border-radius: 8px;
   width: 300px;
-  margin:  20px 0 ;
- 
+  margin: 20px 0;
 `;
 
 export const ModalButton = styled.button`
@@ -38,14 +37,12 @@ export const ModalButton = styled.button`
   cursor: pointer;
 `;
 
-
 export const CloseButton = styled.button`
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: transparent;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
 `;
-

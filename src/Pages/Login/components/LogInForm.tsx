@@ -6,7 +6,7 @@ import {
   FieldGroup,
   FieldStyled,
   FormStyled,
-  IconButton
+  IconButton,
 } from '../../Register/components/RegisterFormStyled';
 // import { useDispatch } from 'react-redux';
 // import { AppDispatch } from '../../../redux/store';
@@ -15,8 +15,6 @@ import {
 import { useState } from 'react';
 import { IoEye, IoEyeOffOutline } from 'react-icons/io5';
 import { useLoginMutation } from '../../../redux/sliceApi';
-
-
 
 const userSchema = Yup.object().shape({
   email: Yup.string()
@@ -29,10 +27,9 @@ const userSchema = Yup.object().shape({
 });
 
 export const LoginForm = () => {
-  const [login]= useLoginMutation();
+  const [login] = useLoginMutation();
   // const dispatch = useDispatch<AppDispatch>();
-  
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const swapPassword = () => {
     setShowPassword(!showPassword);
@@ -43,17 +40,14 @@ export const LoginForm = () => {
     password: string;
   }
 
-  const handleSubmit = async(
-    values: {email: string, password: string},
+  const handleSubmit = async (
+    values: { email: string; password: string },
     actions: FormikHelpers<LogValues>
   ) => {
-   
-    
-      login({
-        email:values.email.toLowerCase(),
-        password: values.password,
-      })
-    
+    login({
+      email: values.email.toLowerCase(),
+      password: values.password,
+    });
 
     actions.resetForm();
   };
@@ -76,13 +70,16 @@ export const LoginForm = () => {
 
         <FieldGroup>
           Password
-          <FieldStyled name="password" type={showPassword ? 'text' : 'password'} placeholder="123456" />
+          <FieldStyled
+            name="password"
+            type={showPassword ? 'text' : 'password'}
+            placeholder="123456"
+          />
           <IconButton type="button" onClick={swapPassword}>
             {showPassword ? <IoEye /> : <IoEyeOffOutline />}
           </IconButton>
           <ErrorMessageStyled name="password" component="span" />
         </FieldGroup>
-
 
         <Button type="submit">Sign In </Button>
       </FormStyled>

@@ -3,7 +3,7 @@ export const theme = {
     darkGray: '#dbdfdf',
     lightGray: '#f3f5f5',
     borderGray: '#3e3f3f',
-    black:'#010101',
+    black: '#010101',
   },
 
   borderRad: {
@@ -12,7 +12,7 @@ export const theme = {
   },
 
   padding: {
-    huge:'40px',
+    huge: '40px',
     big: '20px',
     norm: '8px',
     small: '4px',
