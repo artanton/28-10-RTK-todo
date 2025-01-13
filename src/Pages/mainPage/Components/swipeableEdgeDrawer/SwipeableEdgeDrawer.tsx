@@ -5,22 +5,19 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import { ITask } from '../../../../helpers/Task.types';
 
+interface TemporaryDrawerProps extends Partial<ITask> {
+  open: boolean;
+  onClose:  () => void;
+}
 
-
-const  TemporaryDrawer:FC =()=> {
-  const [open, setOpen] = useState<boolean>(false);
-
-  const toggleDrawer = (newOpen:boolean) => () => {
-    setOpen(newOpen);
-  };
-
+const  TemporaryDrawer: FC<TemporaryDrawerProps> = ({ open,  parentId, subLevel, onClose })=> {
+ 
   return (
     <div>
-      <Button variant="contained" onClick={toggleDrawer(true)}>
-        Create Task
-      </Button>
-      <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+     
+      <Drawer anchor="right" open={open} onClose={onClose}>
         <Box sx={{ width: '50vw' }} role="presentation">
           <Box sx={{ p: 2 }}>
             <h2
@@ -31,7 +28,7 @@ const  TemporaryDrawer:FC =()=> {
               Add New Task
             </h2>
             <Divider />
-            <TaskForm onClose={toggleDrawer(false)} />
+            <TaskForm parentId = {parentId} subLevel ={subLevel} onClose={onClose} />
           </Box>
         </Box>
       </Drawer>

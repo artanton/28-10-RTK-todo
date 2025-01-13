@@ -5,7 +5,7 @@ import {
 import {
   // IAuthState,
   IUser,
-} from '../../helper/Auth.types';
+} from '../helpers/Auth.types';
 import {
   refreshUser,
   removeUser,
@@ -15,16 +15,17 @@ import {
   updateAvatar,
   resendVerify,
   // regenerateToken,
-} from './AuthSlice';
+} from './auth/AuthSlice';
 
-import { customFetchBase } from '../../helper/authMutex';
-import { errorHandler } from '../../helper/helper';
+import { customFetchBase } from '../helpers/authMutex';
+import { errorHandler } from '../helpers/helper';
+import { ITask } from '../helpers/Task.types';
 // import { persistedToken } from '../../helper/helper';
 
 // const defaultURL = `${process.env.REACT_APP_API_URL}/api/users`;
 
 export const generalApi = createApi({
-  reducerPath: 'authApi',
+  reducerPath: 'api',
   // baseQuery: fetchBaseQuery({
   //   baseUrl: defaultURL,
   //   credentials: 'include',
@@ -37,10 +38,11 @@ export const generalApi = createApi({
   //   },
   // }),
   baseQuery: customFetchBase,
+  tagTypes: ['Task'],
   endpoints: builder => ({
     register: builder.mutation({
       query: registerData => ({
-        url: '/register',
+        url: 'users/register',
         method: 'POST',
         body: registerData,
       }),
@@ -57,7 +59,7 @@ export const generalApi = createApi({
     }),
     login: builder.mutation({
       query: creds => ({
-        url: '/login',
+        url: 'users/login',
         method: 'POST',
         body: creds,
       }),
@@ -82,7 +84,7 @@ export const generalApi = createApi({
       query: () => {
         // const token = localStorage.getItem('accessToken')
         return {
-          url: '/current',
+          url: 'users/current',
           method: 'GET',
         };
       },
@@ -103,7 +105,7 @@ export const generalApi = createApi({
     updatePassword: builder.mutation({
       query: creds => {
         return {
-          url: '/update',
+          url: 'users/update',
           method: 'PATCH',
           body: creds,
         };
@@ -123,7 +125,7 @@ export const generalApi = createApi({
     updateAvatar: builder.mutation({
       query: formData => {
         return {
-          url: '/avatar',
+          url: 'users/avatar',
           method: 'PATCH',
           body: formData,
           formData: true,
@@ -144,7 +146,7 @@ export const generalApi = createApi({
     resendVerify: builder.mutation({
       query: email => {
         return {
-          url: '/verify',
+          url: 'users/verify',
           method: 'POST',
           body: { email },
         };
@@ -163,7 +165,7 @@ export const generalApi = createApi({
 
     logout: builder.mutation({
       query: () => ({
-        url: '/logout',
+        url: 'users/logout',
         method: 'POST',
       }),
       async onQueryStarted(arg, lifecycleApi) {
@@ -178,6 +180,35 @@ export const generalApi = createApi({
         }
       },
     }),
+    addTask: builder.mutation({
+      query: (newTask)=>({
+        url: 'tasks',
+        method: 'POST',
+        body: newTask,
+      }),
+      invalidatesTags: ['Task'],
+    }),
+    fetchTasks: builder.query<ITask[], void>({
+      query: ()=>({
+        url: 'tasks',
+      }),
+      providesTags: ['Task'],
+    }),
+    updateTask: builder.mutation({
+      query: ({_id, text})=>({        
+        url:`tasks/${_id}`,
+        method: 'PATCH',
+        body: {text},      
+      }),
+      invalidatesTags: ['Task'],
+    }),
+    deleteTask: builder.mutation({
+      query: (id)=>({
+        url:`tasks/${id}3`,
+        method: 'DELETE',        
+      }),
+      invalidatesTags: ['Task'],
+    }),
   }),
 });
 export const {
@@ -188,4 +219,8 @@ export const {
   useUpdatePasswordMutation,
   useUpdateAvatarMutation,
   useResendVerifyMutation,
+  useAddTaskMutation,
+  useUpdateTaskMutation,
+  useDeleteTaskMutation,
+  useFetchTasksQuery,
 } = generalApi;

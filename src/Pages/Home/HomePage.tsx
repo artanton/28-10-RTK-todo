@@ -1,5 +1,5 @@
 // import { useRefreshQuery } from "../../redux/auth/sliceApi";
-import { IUser } from "../../helper/Auth.types";
+import { IUser } from "../../helpers/Auth.types";
 import { useAuth } from "../../Hooks";
 import { Greating, HomePageContainer } from "./HomePageStyled";
 

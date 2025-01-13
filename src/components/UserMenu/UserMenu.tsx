@@ -6,8 +6,8 @@ import { LogOutButton, LogOutMenu, Name, UserAvatar } from './UserMenuStyled';
 import { FC, useState } from 'react';
 import { Modal } from '../../Pages/mainPage/Components/modal/modalWindow';
 import { UserSettings } from './component/userSettings/userSettings';
-import { IUser } from '../../helper/Auth.types';
-import { useLogoutMutation } from '../../redux/auth/sliceApi';
+import { IUser } from '../../helpers/Auth.types';
+import { useLogoutMutation } from '../../redux/sliceApi';
 
 
 const baseURL = `${process.env.REACT_APP_API_URL}`

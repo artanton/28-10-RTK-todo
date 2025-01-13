@@ -1,9 +1,11 @@
 export interface ITask {
   _id: string;
+  title: null | string;
   text: string;
   date: string;
   parentId: string;
   subLevel: number;
+  done: boolean;
 }
 
 export interface IState {
@@ -32,6 +34,6 @@ export interface IdeleteTaskModal extends Pick<ITask,'_id'>{
   onClose: () => void;
 };
 
-export interface IeditTaskModal extends Pick<ITask, '_id'|'text'>{
+export interface IeditTaskModal extends Pick<ITask, '_id'|'title'|'date'|'text'>{
   onClose: ()=> void;
 }

@@ -7,7 +7,7 @@ import {
 import { Mutex } from 'async-mutex';
 import { refreshToken, removeUser } from '../redux/auth/AuthSlice';
 import { IrefreshToken } from './Auth.types';
-const defaultURL = `${process.env.REACT_APP_API_URL}/api/users`;
+const defaultURL = `${process.env.REACT_APP_API_URL}/api`;
 
 const baseQuery = fetchBaseQuery({
   baseUrl: defaultURL,
@@ -43,7 +43,7 @@ export const customFetchBase: BaseQueryFn<
        const { data } = await baseQuery(
           {
             credentials: 'include',
-            url: '/refresh',
+            url: 'users/refresh',
             method: 'GET',
             
           },

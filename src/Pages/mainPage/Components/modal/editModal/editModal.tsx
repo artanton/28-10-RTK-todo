@@ -1,20 +1,24 @@
 import { useDispatch } from 'react-redux';
-import { updateTask } from '../../../../../redux/tasks/operators';
+// import { updateTask } from '../../../../../redux/tasks/operators';
 import { ModalButton, TextInput } from './editModalStyled';
 import { FC, useState } from 'react';
-import { IeditTaskModal } from '../../../../../helper/Task.types';
+import { IeditTaskModal } from '../../../../../helpers/Task.types';
 import { AppDispatch } from '../../../../../redux/store';
+import { useUpdateTaskMutation } from '../../../../../redux/sliceApi';
 
 export const EditTaskModal: FC<IeditTaskModal> = ({
   _id,
+  title,
+  date,
   text: initialText,
   onClose,
 }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
+  const [updateTask] =useUpdateTaskMutation()
   const [text, setText] = useState(initialText);
 
   const handleUpdate = () => {
-    dispatch(updateTask({ _id, text }));
+    updateTask({ _id, text });
     onClose();
   };
 

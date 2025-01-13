@@ -28,12 +28,26 @@ export const ErrorMessageStyled = styled(ErrorMessage)`
   font-size: 12px;
 `;
 export const FieldStyled = styled(Field)`
-  min-width: 300px;
+  width: 120px;
  
   border: 1px solid ${p => p.theme.colors.borderGray};
   border-radius: ${p => p.theme.borderRad.small};
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.2);
+  @media screen and (min-width: 768px) {
+    width: 100%;}
 `;
+export const DescriptionFieldStyled = styled(Field)`
+box-sizing: content-box;
+  width: 120px;
+ padding:5px 2px;
+ height: 20vw;
+  border: 1px solid ${p => p.theme.colors.borderGray};
+  border-radius: ${p => p.theme.borderRad.small};
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.2);
+  @media screen and (min-width: 768px) {
+    width: 100%;}
+`;
+
 
 export const Button = styled.button`
   width: 100px;

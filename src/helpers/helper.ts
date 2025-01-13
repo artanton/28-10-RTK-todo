@@ -27,9 +27,9 @@ export function formatToString(date: string): string {
   const day = String(actualDate.getDate()).padStart(2, '0');
   const hour = String(actualDate.getHours()).padStart(2, '0');
   const minute = String(actualDate.getMinutes()).padStart(2, '0');
-  const second = String(actualDate.getSeconds()).padStart(2, '0');
+  // const second = String(actualDate.getSeconds()).padStart(2, '0');
 
-  const pickedDate = `${day}-${month}-${year}   ${hour}:${minute}:${second}`;
+  const pickedDate = `${day}-${month}-${year}   ${hour}:${minute}`;
   return pickedDate;
 }
 

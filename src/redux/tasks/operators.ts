@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ITask } from '../../helper/Task.types';
+import { ITask } from '../../helpers/Task.types';
 
 
 
@@ -24,81 +24,78 @@ const setAuthHeader = () => {
 };
 
 
-export const fetchTasks = createAsyncThunk<ITask[]>(
-  'tasks/fetchAll',
-  async (_, thunkAPI) => {
-    try {
-      setAuthHeader ();
-      const response = await axios.get('/tasks');
+// export const fetchTasks = createAsyncThunk<ITask[]>(
+//   'tasks/fetchAll',
+//   async (_, thunkAPI) => {
+//     try {
+//       setAuthHeader ();
+//       const response = await axios.get('/tasks');
 
-      return response.data;
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        return thunkAPI.rejectWithValue(e.message);
-      } else {
-        return thunkAPI.rejectWithValue('An unknown error occurred');
-      }
-    }
-  }
-);
+//       return response.data;
+//     } catch (e: unknown) {
+//       if (e instanceof Error) {
+//         return thunkAPI.rejectWithValue(e.message);
+//       } else {
+//         return thunkAPI.rejectWithValue('An unknown error occurred');
+//       }
+//     }
+//   }
+// );
 
-export const addTask = createAsyncThunk<
-  ITask,
-  Partial<ITask>,
-  { rejectValue: string }
->('tasks/addTask', async ({ text, date, parentId, subLevel }, thunkAPI) => {
-    try {
+// export const addTask = createAsyncThunk<
+//   ITask,
+//   Partial<ITask>,
+//   { rejectValue: string }
+// >('tasks/addTask', async (newTask, thunkAPI) => {
+//     try {
     
-    const response = await axios.post('/tasks', {
-      text,
-      date,
-      parentId,
-      subLevel,
-    });
-    return response.data;
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      return thunkAPI.rejectWithValue(e.message);
-    } else {
-      return thunkAPI.rejectWithValue('An unknown error occurred');
-    }
-  }
-});
+//     const response = await axios.post('/tasks', newTask);
+//     return response.data;
+//   } catch (e: unknown) {
+//     if (e instanceof Error) {
+//       return thunkAPI.rejectWithValue(e.message);
+//     } else {
+//       return thunkAPI.rejectWithValue('An unknown error occurred');
+//     }
+//   }
+// });
 
-export const deleteTask = createAsyncThunk<
-  { _id: string; message: string },
-  string,
-  { rejectValue: string }
->('tasks/deleteTask', async (_id, thunkAPI) => {
-  try {
-    const response = await axios.delete(`/tasks/${_id}`);
-    return response.data;
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      return thunkAPI.rejectWithValue(e.message);
-    } else {
-      return thunkAPI.rejectWithValue('An unknown error occurred');
-    }
-  }
-});
+// export const deleteTask = createAsyncThunk<
+//   { _id: string; message: string },
+//   string,
+//   { rejectValue: string }
+// >('tasks/deleteTask', async (_id, thunkAPI) => {
+//   try {
+//     setAuthHeader ();
+//     const response = await axios.delete(`/tasks/${_id}`);
+//     return response.data;
+//   } catch (e: unknown) {
+//     if (e instanceof Error) {
+//       return thunkAPI.rejectWithValue(e.message);
+//     } else {
+//       return thunkAPI.rejectWithValue('An unknown error occurred');
+//     }
+//   }
+// });
 
-export const updateTask = createAsyncThunk<
-  ITask,
-  Partial<ITask>,
-  { rejectValue: string }
->(
-  'tasks/updateTask',
+// export const updateTask = createAsyncThunk<
+//   ITask,
+//   Partial<ITask>,
+//   { rejectValue: string }
+// >(
+//   'tasks/updateTask',
 
-  async ({ _id, text }, thunkAPI) => {
-    try {
-      const response = await axios.patch(`/tasks/${_id}`, { text });
-      return response.data;
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        return thunkAPI.rejectWithValue(e.message);
-      } else {
-        return thunkAPI.rejectWithValue('An unknown error occurred');
-      }
-    }
-  }
-);
+//   async ({ _id, text }, thunkAPI) => {
+//     try {
+//       setAuthHeader ();
+//       const response = await axios.patch(`/tasks/${_id}`, { text });
+//       return response.data;
+//     } catch (e: unknown) {
+//       if (e instanceof Error) {
+//         return thunkAPI.rejectWithValue(e.message);
+//       } else {
+//         return thunkAPI.rejectWithValue('An unknown error occurred');
+//       }
+//     }
+//   }
+// );

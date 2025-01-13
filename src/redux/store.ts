@@ -12,7 +12,7 @@ import { authReducer } from './auth/AuthSlice';
 //   REGISTER,
 // } from 'redux-persist';
 // import storage from 'redux-persist/lib/storage';
-import { generalApi } from './auth/sliceApi';
+import { generalApi } from './sliceApi';
 // import { setupAxiosInterceptors } from '../helper/axiosInterceptr';
 // import authMiddleware from '../helper/authMiddlware';
 

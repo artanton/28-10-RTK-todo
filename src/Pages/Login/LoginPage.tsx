@@ -8,7 +8,7 @@ import { selectErrorMessage } from '../../redux/auth/selectors';
 import { Button } from '../Register/RegisterPageStyled';
 import { AppDispatch } from '../../redux/store';
 import { useAuth } from '../../Hooks';
-import { useResendVerifyMutation } from '../../redux/auth/sliceApi';
+import { useResendVerifyMutation } from '../../redux/sliceApi';
 
 export default function Login() {
   const errorMessage = useSelector(selectErrorMessage)

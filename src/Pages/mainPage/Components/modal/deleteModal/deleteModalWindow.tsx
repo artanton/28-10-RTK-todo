@@ -1,22 +1,24 @@
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
-import { deleteTask, fetchTasks } from '../../../../../redux/tasks/operators';
+// import { deleteTask} from '../../../../../redux/tasks/operators';
 
-import { ModalButton } from './modalStyledWindow';
+import { ButtonContainer, DeleteModalContent, ModalButton } from './deleteModalWindowStyled';
 import { FC } from 'react';
-import { IdeleteTaskModal } from '../../../../../helper/Task.types';
-import { AppDispatch } from '../../../../../redux/store';
+import { IdeleteTaskModal } from '../../../../../helpers/Task.types';
+import { useDeleteTaskMutation } from '../../../../../redux/sliceApi';
+// import { AppDispatch } from '../../../../../redux/store';
 
 export const DeleteConfirmationModal: FC<IdeleteTaskModal> = ({
   _id,
   onClose,
 }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
+  const [deleteTask] = useDeleteTaskMutation();
   const handleDelete = async (): Promise<void> => {
     try {
-      await dispatch(deleteTask(_id)).unwrap();
+      await deleteTask(_id)
 
-      dispatch(fetchTasks());
+      // dispatch(fetchTasks());
     } catch (error) {
       console.error('Error deleting task:', error);
     }
@@ -25,12 +27,12 @@ export const DeleteConfirmationModal: FC<IdeleteTaskModal> = ({
   };
 
   return (
-    <div>
-      <p>Are you sure you want to delete this task?</p>
-      <div>
+    <DeleteModalContent>
+      <p style={{textAlign :'center'}}>Are you sure you want to delete this task?</p>
+      <ButtonContainer>
         <ModalButton onClick={handleDelete}>Yes</ModalButton>
         <ModalButton onClick={onClose}>No</ModalButton>
-      </div>
-    </div>
+      </ButtonContainer>
+    </DeleteModalContent>
   );
 };

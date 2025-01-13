@@ -14,7 +14,7 @@ import {
 
 import { useState } from 'react';
 import { IoEye, IoEyeOffOutline } from 'react-icons/io5';
-import { useLoginMutation } from '../../../redux/auth/sliceApi';
+import { useLoginMutation } from '../../../redux/sliceApi';
 
 
 

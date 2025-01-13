@@ -1,30 +1,47 @@
 import { GlobalStyle } from '../../globalStyles/GlobalStyle';
 import { TaskList } from './Components/taskList/taskList';
 
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  selectTask,
-  selectError,
-  selectIsLoading,
-} from '../../redux/tasks/selectors';
-import { FC, useEffect } from 'react';
-import { fetchTasks } from '../../redux/tasks/operators';
+// import { useSelector, useDispatch } from 'react-redux';
+// import {
+//   selectTask,
+//   selectError,
+//   selectIsLoading,
+// } from '../../redux/tasks/selectors';
+import { FC, useEffect, useState } from 'react';
+// import { fetchTasks } from '../../redux/tasks/operators';
 import { MagnifyingGlass } from 'react-loader-spinner';
 
 import TemporaryDrawer from './Components/swipeableEdgeDrawer/SwipeableEdgeDrawer';
 import { Container, DrawlerBtn, Loader } from './TaskPageStyled';
-import { AppDispatch } from '../../redux/store';
+// import { AppDispatch } from '../../redux/store';
 import { Helmet } from 'react-helmet-async';
+import { useFetchTasksQuery } from '../../redux/sliceApi';
+import Button from '@mui/material/Button';
 
  const Tasks: FC = () => {
-  const allTasks = useSelector(selectTask);
-  const dispatch = useDispatch<AppDispatch>();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  // const allTasks = useSelector(selectTask);
 
-  useEffect(() => {
-    dispatch(fetchTasks());
-  }, [dispatch]);
+  const {
+    data: tasks,
+    isLoading,
+    isSuccess,
+    // isError,
+    error
+
+  } = useFetchTasksQuery();
+  // const dispatch = useDispatch<AppDispatch>();
+  // const isLoading = useSelector(selectIsLoading);
+  // const error = useSelector(selectError);
+
+  // useEffect(() => {
+  //   dispatch(fetchTasks());
+  // }, [dispatch]);
+   const [open, setOpen] = useState<boolean>(false);
+  
+    const toggleDrawer = (newOpen:boolean) => () => {
+      setOpen(newOpen);
+    };
+  
 
   return (
     <Container>
@@ -32,8 +49,11 @@ import { Helmet } from 'react-helmet-async';
         <title>Your tasks</title>
       </Helmet>
       <DrawlerBtn style={{ zIndex: 0, padding: '40px' }}>
-        <TemporaryDrawer />
+      <Button variant="contained" onClick={toggleDrawer(true) } >
+        Create Task
+      </Button>
       </DrawlerBtn>
+        <TemporaryDrawer open ={open} onClose={toggleDrawer(false)}/>
 
       {isLoading && !error && (
         <Loader>
@@ -50,7 +70,7 @@ import { Helmet } from 'react-helmet-async';
         </Loader>
       )}
 
-      {allTasks.length > 0 ? (
+      {isSuccess&&tasks.length > 0 ? (
         <div>
           <TaskList />
         </div>

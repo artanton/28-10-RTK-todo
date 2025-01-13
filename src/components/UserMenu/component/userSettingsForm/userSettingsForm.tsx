@@ -16,7 +16,7 @@ import {
 import { useState } from 'react';
 
 import { IoEye, IoEyeOffOutline } from 'react-icons/io5';
-import { useUpdatePasswordMutation } from '../../../../redux/auth/sliceApi';
+import { useUpdatePasswordMutation } from '../../../../redux/sliceApi';
 
 interface ChangePassValues {
   oldPassword: string;
