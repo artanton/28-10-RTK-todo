@@ -17,7 +17,7 @@ import { useState } from 'react';
 
 
 import { IoEye, IoEyeOffOutline } from 'react-icons/io5';
-import { useRegisterMutation } from '../../../redux/auth/sliceApi';
+import { useRegisterMutation } from '../../../redux/sliceApi';
 
 interface RegValues {
   name: string;

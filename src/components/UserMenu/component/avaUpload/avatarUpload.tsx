@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // import { useDispatch } from 'react-redux';
 import { useAuth } from '../../../../Hooks';
 import * as yup from 'yup';
-import {IUser } from '../../../../helper/Auth.types'
+import {IUser } from '../../../../helpers/Auth.types'
 import {
   Avatar, 
   FormContainer,
@@ -12,7 +12,7 @@ import {
 } from './avatarUploadStyled';
 import { Formik, Form, ErrorMessage} from 'formik';
 // import { AppDispatch } from '../../../../redux/store';
-import { useUpdateAvatarMutation } from '../../../../redux/auth/sliceApi';
+import { useUpdateAvatarMutation } from '../../../../redux/sliceApi';
 
 const baseURL = process.env.REACT_APP_API_URL;
 // const baseURL = 'https://recursive-todo-api-1.onrender.com'

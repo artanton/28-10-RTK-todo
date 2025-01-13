@@ -7,7 +7,7 @@ import {
 import { Mutex } from 'async-mutex';
 import { refreshToken, removeUser } from '../redux/auth/AuthSlice';
 import { IrefreshToken } from './Auth.types';
-const defaultURL = `${process.env.REACT_APP_API_URL}/api/users`;
+const defaultURL = `${process.env.REACT_APP_API_URL}/api`;
 
 const baseQuery = fetchBaseQuery({
   baseUrl: defaultURL,
@@ -30,7 +30,7 @@ export const customFetchBase: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);
-  
+
   if (result.error?.status === 401) {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
@@ -40,27 +40,25 @@ export const customFetchBase: BaseQueryFn<
         // if (!refreshToken) {
         //   api.dispatch(removeUser());
         // }
-       const { data } = await baseQuery(
+        const { data } = await baseQuery(
           {
             credentials: 'include',
-            url: '/refresh',
+            url: 'users/refresh',
             method: 'GET',
-            
           },
           api,
           extraOptions
         );
-                
-        if(data){
-        const accessToken = (data as IrefreshToken).accessToken;
-        const user = (data as IrefreshToken).user;
-        api.dispatch(refreshToken(user))
-          localStorage.setItem('accessToken',  accessToken);
+
+        if (data) {
+          const accessToken = (data as IrefreshToken).accessToken;
+          const user = (data as IrefreshToken).user;
+          api.dispatch(refreshToken(user));
+          localStorage.setItem('accessToken', accessToken);
           result = await baseQuery(args, api, extraOptions);
         } else {
           localStorage.removeItem('accessToken');
           api.dispatch(removeUser());
-         
         }
       } finally {
         release();

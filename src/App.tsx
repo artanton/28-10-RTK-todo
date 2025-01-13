@@ -13,7 +13,7 @@ import { RestrictedRoute } from './Routes/ResrtrictedRoute';
 
 import { MagnifyingGlass } from 'react-loader-spinner';
 import { Loader } from './AppLayoutStyled';
-import {useRefreshQuery} from './redux/auth/sliceApi';
+import {useRefreshQuery} from './redux/sliceApi';
 // import { refreshUser } from './redux/auth/AuthSlice';
 
 // import { useRefreshQuery } from './redux/auth/sliceApi';

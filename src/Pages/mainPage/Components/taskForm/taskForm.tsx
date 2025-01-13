@@ -2,16 +2,19 @@ import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import {
   Button,
+  DescriptionFieldStyled,
   ErrorMessageStyled,
   FieldGroup,
   FieldStyled,
   FormStyled,
 } from './taskFormStyled';
-import { useDispatch } from 'react-redux';
-import { addTask } from '../../../../redux/tasks/operators';
-import { ITask } from '../../../../helper/Task.types';
+// import { useDispatch } from 'react-redux';
+// import { addTask } from '../../../../redux/tasks/operators';
+import { ITask } from '../../../../helpers/Task.types';
 import { FC } from 'react';
-import { AppDispatch } from '../../../../redux/store';
+// import { AppDispatch } from '../../../../redux/store';
+import { formatToString } from '../../../../helpers/helper';
+import { useAddTaskMutation } from '../../../../redux/sliceApi';
 // import Notiflix from 'notiflix';
 
 interface TaskFormProp extends Partial<ITask> {
@@ -19,17 +22,18 @@ interface TaskFormProp extends Partial<ITask> {
 }
 
 const taskSchema = Yup.object().shape({
-  text: Yup.string()
-    // .matches(/^[^!]*$/, 'The task cannot contain the "!" character.')
-    .required('Required'),
+  title: Yup.string().required('Required'),
+  text: Yup.string(),
+  date: Yup.string(),
+  // .matches(/^[^!]*$/, 'The task cannot contain the "!" character.')
 });
 
 export const TaskForm: FC<TaskFormProp> = ({ parentId, subLevel, onClose }) => {
-  const dispatchTask = useDispatch<AppDispatch>();
-
+  // const dispatchTask = useDispatch<AppDispatch>();
+  const [addTask] = useAddTaskMutation();
   const onAdd = (
-    values: { text: string; date: string },
-    actions: FormikHelpers<{ text: string; date: string }>
+    values: { title: string; text: string; date: string },
+    actions: FormikHelpers<{ title: string; text: string; date: string }>
   ) => {
     // if (values.text.includes('!')) {
     //   Notiflix.Notify.failure('The task field cannot contain "!" character.');
@@ -43,33 +47,52 @@ export const TaskForm: FC<TaskFormProp> = ({ parentId, subLevel, onClose }) => {
     }
 
     const newTask = {
+      title: values.title,
       text: values.text,
-      date: new Date().toISOString(),
+      date: values.date,
       parentId: parentId,
       subLevel: subLevel,
+      done: false,
     };
+    console.log(newTask);
+    console.log(formatToString(Date()));
 
-    dispatchTask(addTask(newTask));
+    addTask(newTask);
     actions.resetForm();
     if (onClose) {
       onClose();
     }
   };
+  const initialValues = {
+    title: '',
+    text: '',
+    date: new Date().toString(),
+  };
   return (
     <Formik
-      initialValues={{
-        text: '',
-        date: new Date().toString(),
-      }}
+      initialValues={initialValues}
       validationSchema={taskSchema}
       onSubmit={onAdd}
+      setFieldValue
     >
       <FormStyled>
         <FieldGroup>
-          <FieldStyled
+          <FieldStyled name="title" type="title" placeholder="Task name" />
+          <ErrorMessageStyled name="text" component="span" />
+        </FieldGroup>
+        <FieldGroup>
+          <DescriptionFieldStyled
             name="text"
             type="text"
-            placeholder="Insert your task here"
+            placeholder="Task description"
+          />
+          <ErrorMessageStyled name="text" component="span" />
+        </FieldGroup>
+        <FieldGroup>
+          <FieldStyled
+            name="date"
+            type="datetime-local"
+            placeholder={formatToString(initialValues.date)}
           />
           <ErrorMessageStyled name="text" component="span" />
         </FieldGroup>

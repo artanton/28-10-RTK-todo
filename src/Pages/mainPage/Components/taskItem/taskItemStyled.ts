@@ -11,7 +11,7 @@ export const TaskRow = styled.div`
 export const DeleteButton = styled.button`
   background: none;
   border: none;
-padding: 0 20px;
+  /* padding: 0 20px; */
   cursor: pointer;
   /* display: flex;
   align-items: center; */
@@ -31,10 +31,9 @@ export const EditButton = styled.button`
 `;
 export const AddSubTaskButton = styled.button`
   background: none;
-  padding: 0 10px;
+  /* padding: 0 10px; */
   border: none;
   text-align: center;
-  
-  cursor: pointer;
 
+  cursor: pointer;
 `;

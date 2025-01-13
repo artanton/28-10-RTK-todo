@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { IAuthState } from '../../helper/Auth.types';
+import { IAuthState } from '../../helpers/Auth.types';
 
 export const initialState: IAuthState = {
   user: {
