@@ -181,7 +181,7 @@ export const generalApi = createApi({
       },
     }),
     addTask: builder.mutation({
-      query: (newTask)=>({
+      query: newTask => ({
         url: 'tasks',
         method: 'POST',
         body: newTask,
@@ -189,23 +189,23 @@ export const generalApi = createApi({
       invalidatesTags: ['Task'],
     }),
     fetchTasks: builder.query<ITask[], void>({
-      query: ()=>({
+      query: () => ({
         url: 'tasks',
       }),
       providesTags: ['Task'],
     }),
     updateTask: builder.mutation({
-      query: ({_id, text})=>({        
-        url:`tasks/${_id}`,
+      query: ({ _id, text }) => ({
+        url: `tasks/${_id}`,
         method: 'PATCH',
-        body: {text},      
+        body: { text },
       }),
       invalidatesTags: ['Task'],
     }),
     deleteTask: builder.mutation({
-      query: (id)=>({
-        url:`tasks/${id}3`,
-        method: 'DELETE',        
+      query: id => ({
+        url: `tasks/${id}3`,
+        method: 'DELETE',
       }),
       invalidatesTags: ['Task'],
     }),

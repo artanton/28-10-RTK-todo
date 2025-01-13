@@ -7,7 +7,7 @@ import { TaskList } from './Components/taskList/taskList';
 //   selectError,
 //   selectIsLoading,
 // } from '../../redux/tasks/selectors';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 // import { fetchTasks } from '../../redux/tasks/operators';
 import { MagnifyingGlass } from 'react-loader-spinner';
 
@@ -18,7 +18,7 @@ import { Helmet } from 'react-helmet-async';
 import { useFetchTasksQuery } from '../../redux/sliceApi';
 import Button from '@mui/material/Button';
 
- const Tasks: FC = () => {
+const Tasks: FC = () => {
   // const allTasks = useSelector(selectTask);
 
   const {
@@ -26,8 +26,7 @@ import Button from '@mui/material/Button';
     isLoading,
     isSuccess,
     // isError,
-    error
-
+    error,
   } = useFetchTasksQuery();
   // const dispatch = useDispatch<AppDispatch>();
   // const isLoading = useSelector(selectIsLoading);
@@ -36,12 +35,11 @@ import Button from '@mui/material/Button';
   // useEffect(() => {
   //   dispatch(fetchTasks());
   // }, [dispatch]);
-   const [open, setOpen] = useState<boolean>(false);
-  
-    const toggleDrawer = (newOpen:boolean) => () => {
-      setOpen(newOpen);
-    };
-  
+  const [open, setOpen] = useState<boolean>(false);
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
 
   return (
     <Container>
@@ -49,11 +47,11 @@ import Button from '@mui/material/Button';
         <title>Your tasks</title>
       </Helmet>
       <DrawlerBtn style={{ zIndex: 0, padding: '40px' }}>
-      <Button variant="contained" onClick={toggleDrawer(true) } >
-        Create Task
-      </Button>
+        <Button variant="contained" onClick={toggleDrawer(true)}>
+          Create Task
+        </Button>
       </DrawlerBtn>
-        <TemporaryDrawer open ={open} onClose={toggleDrawer(false)}/>
+      <TemporaryDrawer open={open} onClose={toggleDrawer(false)} />
 
       {isLoading && !error && (
         <Loader>
@@ -70,7 +68,7 @@ import Button from '@mui/material/Button';
         </Loader>
       )}
 
-      {isSuccess&&tasks.length > 0 ? (
+      {isSuccess && tasks.length > 0 ? (
         <div>
           <TaskList />
         </div>

@@ -24,17 +24,16 @@ interface TaskFormProp extends Partial<ITask> {
 const taskSchema = Yup.object().shape({
   title: Yup.string().required('Required'),
   text: Yup.string(),
-  date: Yup.string()
-    // .matches(/^[^!]*$/, 'The task cannot contain the "!" character.')
-    
+  date: Yup.string(),
+  // .matches(/^[^!]*$/, 'The task cannot contain the "!" character.')
 });
 
 export const TaskForm: FC<TaskFormProp> = ({ parentId, subLevel, onClose }) => {
   // const dispatchTask = useDispatch<AppDispatch>();
-const [addTask]=useAddTaskMutation();
+  const [addTask] = useAddTaskMutation();
   const onAdd = (
-    values: { title: string, text: string; date: string },
-    actions: FormikHelpers<{  title: string, text: string; date: string }>
+    values: { title: string; text: string; date: string },
+    actions: FormikHelpers<{ title: string; text: string; date: string }>
   ) => {
     // if (values.text.includes('!')) {
     //   Notiflix.Notify.failure('The task field cannot contain "!" character.');
@@ -64,25 +63,21 @@ const [addTask]=useAddTaskMutation();
       onClose();
     }
   };
-  const initialValues={
+  const initialValues = {
     title: '',
     text: '',
     date: new Date().toString(),
   };
   return (
     <Formik
-      initialValues ={initialValues}
+      initialValues={initialValues}
       validationSchema={taskSchema}
       onSubmit={onAdd}
       setFieldValue
     >
       <FormStyled>
-      <FieldGroup>
-          <FieldStyled
-            name="title"
-            type="title"
-            placeholder="Task name"
-          />
+        <FieldGroup>
+          <FieldStyled name="title" type="title" placeholder="Task name" />
           <ErrorMessageStyled name="text" component="span" />
         </FieldGroup>
         <FieldGroup>

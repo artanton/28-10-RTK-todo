@@ -28,12 +28,13 @@ export interface IgeneralModal {
 
 export interface IaddSubTaskModal extends Pick<ITask, '_id' | 'subLevel'> {
   onClose: () => void;
-};
+}
 
-export interface IdeleteTaskModal extends Pick<ITask,'_id'>{
+export interface IdeleteTaskModal extends Pick<ITask, '_id'> {
   onClose: () => void;
-};
+}
 
-export interface IeditTaskModal extends Pick<ITask, '_id'|'title'|'date'|'text'>{
-  onClose: ()=> void;
+export interface IeditTaskModal
+  extends Pick<ITask, '_id' | 'title' | 'date' | 'text'> {
+  onClose: () => void;
 }

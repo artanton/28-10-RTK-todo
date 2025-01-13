@@ -106,5 +106,3 @@ With this Todo List application, you can:
 - **Backend:** Node.js, Express.js, MongoDB
 - **Authentication:** JWT tokens, Refresh tokens
 - **Styling:** CSS Modules, MUI
-
-
