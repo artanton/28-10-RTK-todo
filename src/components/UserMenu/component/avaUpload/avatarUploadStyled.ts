@@ -1,23 +1,18 @@
 import styled from 'styled-components';
 
-
 export const Avatar = styled.img`
   border-radius: 50%;
-  width:200px;
+  width: 200px;
   height: 200px;
   object-fit: cover;
   position: relative;
   margin-bottom: 20px;
 `;
 
-
-
 export const SubmitButton = styled.button`
-display: flex;
-  
-  
+  display: flex;
 
-margin: 0 auto;
+  margin: 0 auto;
   justify-content: center;
   position: relative;
   box-sizing: border-box;
@@ -50,7 +45,6 @@ margin: 0 auto;
   }
 `;
 
-
 export const HiddenFileInput = styled.input`
   opacity: 0;
   visibility: hidden;
@@ -58,9 +52,8 @@ export const HiddenFileInput = styled.input`
 `;
 
 export const FormContainer = styled.div`
-padding: ${p => p.theme.padding.huge};
+  padding: ${p => p.theme.padding.huge};
   display: flex;
-  
+
   flex-direction: column;
- 
-;`
+`;

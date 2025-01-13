@@ -9,10 +9,9 @@ import { useAuth } from '../Hooks';
 
 // export const RestrictedRoute: React.FC<RestrictedRouteProps> = ({
 
-export const RestrictedRoute = ({ 
-  component: Component, redirectTo = '/' }) => {
+export const RestrictedRoute = ({ component: Component, redirectTo = '/' }) => {
   // const {data: user } = useRefreshQuery();
-  const {isLoggedIn, user}= useAuth();
+  const { isLoggedIn, user } = useAuth();
 
   if (isLoggedIn && !user.verify) {
     return Component;

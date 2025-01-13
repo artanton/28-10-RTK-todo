@@ -23,27 +23,22 @@ import { generalApi } from './sliceApi';
 // }
 // const persistedAuthReducer = persistReducer(authPersistConfig,  authReducer);
 
-
-
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     task: taskReducer,
-    [generalApi.reducerPath]:generalApi.reducer
+    [generalApi.reducerPath]: generalApi.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       // serializableCheck: {
       //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       // },
-    })
-   .concat(generalApi.middleware)
-    ,
-    devTools: process.env.NODE_ENV === 'development',
+    }).concat(generalApi.middleware),
+  devTools: process.env.NODE_ENV === 'development',
 });
 
 // export const persistor= persistStore (store);
-
 
 // const waitForRehydration = new Promise<void>((resolve) => {
 //   const unsubscribe = persistor.subscribe(() => {
@@ -61,4 +56,3 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-

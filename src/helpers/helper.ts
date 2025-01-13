@@ -44,7 +44,6 @@ export function getRandomHexColor(): string {
   //making random numbers for light colors
   const getRandomChannelValue = () => Math.floor(Math.random() * 128) + 128;
 
-  
   const r = getRandomChannelValue();
   const g = getRandomChannelValue();
   const b = getRandomChannelValue();
@@ -85,5 +84,3 @@ export const errorHandler = (error: any) => {
   const message = error?.error?.data?.message as string;
   Notify.failure(message || 'Somethng went wrong');
 };
-
-

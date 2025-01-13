@@ -26,7 +26,7 @@ interface ChangePassValues {
 
 const userUpdateSchema = Yup.object().shape({
   oldPassword: Yup.string()
-  .min(6, 'At least 6 charts required')
+    .min(6, 'At least 6 charts required')
     .required('Required'),
 
   newPassword: Yup.string()
@@ -57,14 +57,13 @@ export const UserSettingsForm = () => {
   };
 
   const handleSubmit = (
-    values:ChangePassValues, 
-    actions:FormikHelpers<ChangePassValues>
+    values: ChangePassValues,
+    actions: FormikHelpers<ChangePassValues>
   ) => {
-     
-      updatePassword({
-        oldPassword: values.oldPassword,
-        newPassword: values.newPassword,
-      });
+    updatePassword({
+      oldPassword: values.oldPassword,
+      newPassword: values.newPassword,
+    });
     actions.resetForm();
   };
 
