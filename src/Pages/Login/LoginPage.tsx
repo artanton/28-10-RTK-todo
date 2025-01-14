@@ -30,7 +30,7 @@ export default function Login() {
       {errorMessage !== 'Email is not verified' ? (
         <TextBlock>
           <p>
-            <Link href="/28-10-RTK-Next-todo/register">Create an Account</Link>
+            <Link href="/register">Create an Account</Link>
           </p>
         </TextBlock>
       ) : (
