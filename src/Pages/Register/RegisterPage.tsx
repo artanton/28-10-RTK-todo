@@ -21,7 +21,7 @@ export default function Register() {
         <TextBlock>
           <p>Already have an account?</p>
           <p>
-            <Link href="/28-10-RTK-todo/login">Sign in</Link>
+            <Link href="/login">Sign in</Link>
           </p>
         </TextBlock>
       ) : (
@@ -29,7 +29,7 @@ export default function Register() {
           <p style={{color:"red"}}>E-mail is already in use.</p>
           <p style={{color:"red"}}>Try to Sign in please. </p>
           <p>
-            <Link href="/28-10-RTK-todo/login">Sign in</Link>
+            <Link href="/login">Sign in</Link>
           </p>
         </TextBlock>
         
