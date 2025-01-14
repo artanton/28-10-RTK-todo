@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunktodo_list_app=self.webpackChunktodo_list_app||[]).push([[583],{1583:function(t,e,n){n.r(e);var i=n(184),l={container:{minHeight:"calc(100vh - 50px)",display:"flex",alignItems:"center",justifyContent:"center"},title:{fontWeight:500,fontSize:42,textAlign:"center"}};e.default=function(){return(0,i.jsx)("div",{style:l.container,children:(0,i.jsx)("h1",{style:{fontSize:48,textAlign:"center"},children:"Error 404. Page not found"})})}}}]);
+//# sourceMappingURL=583.266ad644.chunk.js.map
