@@ -8,9 +8,6 @@ import {
   FormStyled,
   IconButton,
 } from '../../Register/components/RegisterFormStyled';
-// import { useDispatch } from 'react-redux';
-// import { AppDispatch } from '../../../redux/store';
-// import { login } from '../../../redux/auth/operators';
 
 import { useState } from 'react';
 import { IoEye, IoEyeOffOutline } from 'react-icons/io5';
@@ -28,7 +25,6 @@ const userSchema = Yup.object().shape({
 
 export const LoginForm = () => {
   const [login] = useLoginMutation();
-  // const dispatch = useDispatch<AppDispatch>();
 
   const [showPassword, setShowPassword] = useState(false);
   const swapPassword = () => {

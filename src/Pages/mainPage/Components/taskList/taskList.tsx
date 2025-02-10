@@ -1,7 +1,6 @@
-// import { useSelector } from 'react-redux';
 import { TaskItem } from '../taskItem/taskItem';
 import { TasksList } from './taskListStyled';
-// import { selectTask } from '../../../../redux/tasks/selectors';
+
 import {
   getColorForLevel,
   groupTasksByParentId,
@@ -37,7 +36,6 @@ export const TaskList: FC = () => {
   if (!tasks) {
     return null;
   }
-  // const tasks = useSelector(selectTask);
 
   const taskMap = groupTasksByParentId(tasks);
 
