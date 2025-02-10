@@ -195,16 +195,19 @@ export const generalApi = createApi({
       providesTags: ['Task'],
     }),
     updateTask: builder.mutation({
-      query: ({ _id, text }) => ({
-        url: `tasks/${_id}`,
+      query: (task) => {
+        const {_id, ...body}= task;
+        return{
+        url: `tasks/${task._id}`,
         method: 'PATCH',
-        body: { text },
-      }),
+        body: body,
+      }
+      },
       invalidatesTags: ['Task'],
     }),
     deleteTask: builder.mutation({
       query: id => ({
-        url: `tasks/${id}3`,
+        url: `tasks/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Task'],

@@ -1,41 +1,49 @@
-// import { useDispatch } from 'react-redux';
-// import { updateTask } from '../../../../../redux/tasks/operators';
-import { ModalButton, TextInput } from './editModalStyled';
+import { ModalButton, TextInput, TitleInput } from './editModalStyled';
 import { FC, useState } from 'react';
 import { IeditTaskModal } from '../../../../../helpers/Task.types';
-// import { AppDispatch } from '../../../../../redux/store';
+
 import { useUpdateTaskMutation } from '../../../../../redux/sliceApi';
 
 export const EditTaskModal: FC<IeditTaskModal> = ({
   _id,
-  title,
+  title: initialTitle,
   date,
   text: initialText,
   onClose,
 }) => {
-  // const dispatch = useDispatch<AppDispatch>();
   const [updateTask] = useUpdateTaskMutation();
   const [text, setText] = useState(initialText);
+  const [title, setTitle] = useState(initialTitle);
 
+  console.log(_id, title, text);
   const handleUpdate = () => {
-    updateTask({ _id, text });
+    updateTask({ _id, title, text });
     onClose();
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
+  };
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
   };
 
   return (
     <div>
       <p>Edit task please</p>
 
-      <form>
+      <form style={{ display: 'flex', flexDirection: 'column' }}>
+        <TitleInput
+          name="title"
+          // value={title}
+          onChange={handleTitleChange}
+          placeholder="Insert edited title"
+        />
         <TextInput
           name="text"
           rows={3}
           value={text}
-          onChange={handleChange}
+          onChange={handleTextChange}
           placeholder="Insert edited task here"
         />
       </form>

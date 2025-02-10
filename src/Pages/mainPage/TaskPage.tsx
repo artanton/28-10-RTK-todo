@@ -1,40 +1,30 @@
 import { GlobalStyle } from '../../globalStyles/GlobalStyle';
 import { TaskList } from './Components/taskList/taskList';
 
-// import { useSelector, useDispatch } from 'react-redux';
-// import {
-//   selectTask,
-//   selectError,
-//   selectIsLoading,
-// } from '../../redux/tasks/selectors';
 import { FC, useState } from 'react';
-// import { fetchTasks } from '../../redux/tasks/operators';
+
 import { MagnifyingGlass } from 'react-loader-spinner';
 
 import TemporaryDrawer from './Components/swipeableEdgeDrawer/SwipeableEdgeDrawer';
 import { Container, DrawlerBtn, Loader } from './TaskPageStyled';
-// import { AppDispatch } from '../../redux/store';
+
 import { Helmet } from 'react-helmet-async';
 import { useFetchTasksQuery } from '../../redux/sliceApi';
 import Button from '@mui/material/Button';
 
-const Tasks: FC = () => {
-  // const allTasks = useSelector(selectTask);
+import { ITask } from '../../helpers/Task.types';
+import { CreateTaskDrawler } from './Components/modal/createTaskDrawler/createTaskDrawler';
 
+export interface TemporaryDrawerProps extends Partial<ITask> {}
+const Tasks: FC<TemporaryDrawerProps> = ({ parentId = '0', subLevel = 0 }) => {
   const {
     data: tasks,
     isLoading,
     isSuccess,
-    // isError,
+
     error,
   } = useFetchTasksQuery();
-  // const dispatch = useDispatch<AppDispatch>();
-  // const isLoading = useSelector(selectIsLoading);
-  // const error = useSelector(selectError);
 
-  // useEffect(() => {
-  //   dispatch(fetchTasks());
-  // }, [dispatch]);
   const [open, setOpen] = useState<boolean>(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -51,7 +41,13 @@ const Tasks: FC = () => {
           Create Task
         </Button>
       </DrawlerBtn>
-      <TemporaryDrawer open={open} onClose={toggleDrawer(false)} />
+      <TemporaryDrawer open={open} onClose={toggleDrawer(false)}>
+        <CreateTaskDrawler
+          parentId={parentId}
+          subLevel={subLevel}
+          onClose={toggleDrawer(false)}
+        />
+      </TemporaryDrawer>
 
       {isLoading && !error && (
         <Loader>

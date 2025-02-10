@@ -1,21 +1,24 @@
-import { Formik, FormikHelpers } from 'formik';
+import { FormikHelpers, useFormik } from 'formik';
 import * as Yup from 'yup';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import dayjs from 'dayjs';
 import {
-  Button,
-  DescriptionFieldStyled,
-  ErrorMessageStyled,
-  FieldGroup,
+  ButtonContainer,
+  ButtonStyled,
   FieldStyled,
   FormStyled,
+  TimePickerContainer,
 } from './taskFormStyled';
-// import { useDispatch } from 'react-redux';
-// import { addTask } from '../../../../redux/tasks/operators';
+
 import { ITask } from '../../../../helpers/Task.types';
 import { FC } from 'react';
-// import { AppDispatch } from '../../../../redux/store';
-import { formatToString } from '../../../../helpers/helper';
-import { useAddTaskMutation } from '../../../../redux/sliceApi';
-// import Notiflix from 'notiflix';
+import {
+  useAddTaskMutation,
+  useUpdateTaskMutation,
+} from '../../../../redux/sliceApi';
+import {  Divider } from '@mui/material';
 
 interface TaskFormProp extends Partial<ITask> {
   onClose: () => void;
@@ -25,80 +28,132 @@ const taskSchema = Yup.object().shape({
   title: Yup.string().required('Required'),
   text: Yup.string(),
   date: Yup.string(),
-  // .matches(/^[^!]*$/, 'The task cannot contain the "!" character.')
 });
 
-export const TaskForm: FC<TaskFormProp> = ({ parentId, subLevel, onClose }) => {
-  // const dispatchTask = useDispatch<AppDispatch>();
+export const TaskForm: FC<TaskFormProp> = props => {
+  const {
+    _id,
+    title = '',
+    text = '',
+    date = new Date().toString(),
+    parentId,
+    subLevel,
+    onClose,
+  } = props;
+
+  const [updateTask] = useUpdateTaskMutation();
   const [addTask] = useAddTaskMutation();
+
+  const onEdit = (
+    values: { title: string; text: string; date: string },
+    actions: FormikHelpers<{ title: string; text: string; date: string }>
+  ) => {
+    const editedTask = {
+      _id: _id,
+      title: values.title,
+      text: values.text,
+      date: values.date,
+    };
+    updateTask(editedTask);
+    actions.resetForm();
+
+    onClose();
+  };
   const onAdd = (
     values: { title: string; text: string; date: string },
     actions: FormikHelpers<{ title: string; text: string; date: string }>
   ) => {
-    // if (values.text.includes('!')) {
-    //   Notiflix.Notify.failure('The task field cannot contain "!" character.');
-    //   return;
-    // }
-    if (!parentId) {
-      parentId = '0';
-      subLevel = 0;
-    } else {
-      subLevel = (subLevel ?? 0) + 1;
-    }
+    const taskParentId = parentId ?? '0';
+    const taskSubLevel = parentId ? 0 : (subLevel ?? 0) + 1;
 
     const newTask = {
       title: values.title,
       text: values.text,
       date: values.date,
-      parentId: parentId,
-      subLevel: subLevel,
+      parentId: taskParentId,
+      subLevel: taskSubLevel,
       done: false,
     };
-    console.log(newTask);
-    console.log(formatToString(Date()));
 
     addTask(newTask);
     actions.resetForm();
-    if (onClose) {
-      onClose();
+
+    onClose();
+  };
+  const submit = (
+    values: { title: string; text: string; date: string },
+    actions: FormikHelpers<{ title: string; text: string; date: string }>
+  ) => {
+    if (_id) {
+      onEdit(values, actions);
+    } else {
+      onAdd(values, actions);
     }
   };
-  const initialValues = {
-    title: '',
-    text: '',
-    date: new Date().toString(),
-  };
-  return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={taskSchema}
-      onSubmit={onAdd}
-      setFieldValue
-    >
-      <FormStyled>
-        <FieldGroup>
-          <FieldStyled name="title" type="title" placeholder="Task name" />
-          <ErrorMessageStyled name="text" component="span" />
-        </FieldGroup>
-        <FieldGroup>
-          <DescriptionFieldStyled
-            name="text"
-            type="text"
-            placeholder="Task description"
-          />
-          <ErrorMessageStyled name="text" component="span" />
-        </FieldGroup>
-        <FieldGroup>
-          <FieldStyled
-            name="date"
-            type="datetime-local"
-            placeholder={formatToString(initialValues.date)}
-          />
-          <ErrorMessageStyled name="text" component="span" />
-        </FieldGroup>
 
-        <Button type="submit">Add Task</Button>
+  const initialValues = {
+    title: title,
+    text: text,
+    date: date,
+  };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: taskSchema,
+    onSubmit: submit,
+  });
+
+  const { values,  handleChange, handleSubmit, setFieldValue } =
+    formik;
+  return (
+    <>
+      <Divider />
+      <FormStyled autoComplete="off" onSubmit={handleSubmit}>
+        <FieldStyled
+          id="title"
+          name="title"
+          label="Title"
+          variant="outlined"
+          onChange={handleChange}
+          value={values.title}
+        />
+
+        <FieldStyled
+          id="text"
+          name="text"
+          label="Task description"
+          multiline
+          rows={5}
+          value={values.text}
+          onChange={handleChange}
+        />
+        <TimePickerContainer>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DateTimePicker
+            name="date"
+            label="Shcedule task"
+            ampm={false}
+            format="YYYY/MM/DD HH:mm"
+            value={dayjs(values.date)}
+            onChange={newValue =>
+              setFieldValue('date', newValue?.toISOString())
+            }
+          />
+        </LocalizationProvider>
+        </TimePickerContainer>
+
+        <ButtonContainer>
+          {!_id ? (
+            <ButtonStyled size="small" variant="contained" type="submit">
+              Add Task
+            </ButtonStyled>
+          ) : (
+            <ButtonStyled size="small" variant="contained" type="submit">
+              Edit task
+            </ButtonStyled>
+          )}
+        </ButtonContainer>
       </FormStyled>
-    </Formik>
+    </>
   );
 };

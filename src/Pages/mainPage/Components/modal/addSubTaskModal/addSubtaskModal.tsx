@@ -1,21 +1,15 @@
 import { FC } from 'react';
-import { IaddSubTaskModal } from '../../../../../helpers/Task.types';
+import { IaddTaskProp } from '../../../../../helpers/Task.types';
 import { TaskForm } from '../../taskForm/taskForm';
 
-export const AddSubTaskModal: FC<IaddSubTaskModal> = ({
+export const AddSubTaskModal: FC<IaddTaskProp> = ({
   _id,
   onClose,
   subLevel,
 }) => {
   return (
     <div>
-      <h2
-        style={{
-          padding: 10,
-        }}
-      >
-        Add SubTask
-      </h2>
+      <h2 style={{ padding: '20px', textAlign: 'center' }}>Add SubTask</h2>
 
       <TaskForm parentId={_id} onClose={onClose} subLevel={subLevel} />
     </div>
