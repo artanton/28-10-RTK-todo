@@ -8,13 +8,9 @@ import {
   FormStyled,
   IconButton,
 } from './RegisterFormStyled';
-// import { useDispatch } from 'react-redux';
-// import { AppDispatch } from '../../../redux/store';
-// import { register } from '../../../redux/auth/operators';
 
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-
 
 import { IoEye, IoEyeOffOutline } from 'react-icons/io5';
 import { useRegisterMutation } from '../../../redux/sliceApi';
@@ -43,8 +39,7 @@ const userSchema = Yup.object().shape({
 });
 
 export const RegisterForm = () => {
-  // const dispatch = useDispatch<AppDispatch>();
-  const [register]=useRegisterMutation();
+  const [register] = useRegisterMutation();
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -52,8 +47,6 @@ export const RegisterForm = () => {
   const swapPassword = () => {
     setShowPassword(!showPassword);
   };
-
-  
 
   const handleSubmit = async (
     values: RegValues,
@@ -65,19 +58,13 @@ export const RegisterForm = () => {
       password: values.password,
     };
     try {
-      await  register(registerData).unwrap();
+      await register(registerData).unwrap();
       navigate(`/login`);
-   
-      
-      
     } catch (error) {
       console.error('Failed to register:', error);
-    }finally{
+    } finally {
       actions.resetForm();
     }
-
-    
-    
   };
 
   return (
@@ -99,18 +86,17 @@ export const RegisterForm = () => {
 
         <FieldGroup>
           E-mail
-          <FieldStyled
-            name="email"
-            type="string"
-            placeholder="some@mail.com"
-          />
+          <FieldStyled name="email" type="string" placeholder="some@mail.com" />
           <ErrorMessageStyled name="email" component="span" />
         </FieldGroup>
-          
 
         <FieldGroup>
           Password
-          <FieldStyled name="password" type={showPassword ? 'text' : 'password'} placeholder="123456" />
+          <FieldStyled
+            name="password"
+            type={showPassword ? 'text' : 'password'}
+            placeholder="123456"
+          />
           <IconButton type="button" onClick={swapPassword}>
             {showPassword ? <IoEye /> : <IoEyeOffOutline />}
           </IconButton>

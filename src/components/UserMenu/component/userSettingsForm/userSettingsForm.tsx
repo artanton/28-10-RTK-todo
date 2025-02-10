@@ -8,10 +8,7 @@ import {
   FormStyled,
   IconButton,
 } from './userSettingsFormStyled';
-// import { useDispatch } from 'react-redux';
-// import { AppDispatch } from '../../../../redux/store';
 
-// import { updatePassword } from '../../../../redux/auth/operators';
 
 import { useState } from 'react';
 
@@ -39,7 +36,7 @@ const userUpdateSchema = Yup.object().shape({
 });
 
 export const UserSettingsForm = () => {
-  // const dispatch = useDispatch<AppDispatch>();
+
   const [updatePassword] = useUpdatePasswordMutation();
 
   const [showActualPassword, setActualShowPassword] = useState(false);

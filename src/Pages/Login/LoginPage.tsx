@@ -2,20 +2,17 @@ import { Helmet } from 'react-helmet-async';
 
 import { LoginForm } from './components/LogInForm';
 import { Header, Link, TextBlock } from '../Register/RegisterPageStyled';
-import {
-  useSelector,
-  //  useDispatch
-} from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectErrorMessage } from '../../redux/auth/selectors';
-// import { resendVerify } from '../../redux/auth/operators';
+
 import { Button } from '../Register/RegisterPageStyled';
-// import { AppDispatch } from '../../redux/store';
+
 import { useAuth } from '../../Hooks';
 import { useResendVerifyMutation } from '../../redux/sliceApi';
 
 export default function Login() {
   const errorMessage = useSelector(selectErrorMessage);
-  // const dispatch = useDispatch<AppDispatch>();
+
   const [resendVerify] = useResendVerifyMutation();
   const { user } = useAuth();
   const email = user?.email;
