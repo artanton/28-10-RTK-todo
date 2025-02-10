@@ -21,12 +21,20 @@ export const ModalContent = styled.div`
   position: relative;
 `;
 
+export const TitleInput = styled.input`
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  width: 300px;
+  margin: 10px 0;
+`;
+
 export const TextInput = styled.textarea`
   background-color: #fff;
   padding: 10px;
   border-radius: 8px;
   width: 300px;
-  margin: 20px 0;
+  margin: 10px 0;
 `;
 
 export const ModalButton = styled.button`
