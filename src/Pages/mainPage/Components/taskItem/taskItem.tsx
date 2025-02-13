@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import { DeleteConfirmationModal } from '../modal/deleteModal/deleteModalWindow';
 
-import { AddSubTaskModal } from '../modal/addSubTaskModal/addSubtaskModal';
+import { AddSubTaskModal } from '../swipeableEdgeDrawer/addSubTaskDrawler/addSubTaskDrawler';
 
 import { Modal } from '../modal/modalWindow';
 import {
@@ -26,7 +26,7 @@ import { useUpdateTaskMutation } from '../../../../redux/sliceApi';
 import { TaskContent } from '../modal/taskModal/taskModal';
 import TemporaryDrawer from '../swipeableEdgeDrawer/SwipeableEdgeDrawer';
 
-import { EditTaskDrawler } from '../modal/editModal/editTaskDrawler';
+import { EditTaskDrawler } from '../swipeableEdgeDrawer/editTaskDrawler/editTaskDrawler';
 
 const Item = styled(Paper)(({ theme }) => ({
   // backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

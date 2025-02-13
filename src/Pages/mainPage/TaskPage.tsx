@@ -13,7 +13,7 @@ import { useFetchTasksQuery } from '../../redux/sliceApi';
 import Button from '@mui/material/Button';
 
 import { ITask } from '../../helpers/Task.types';
-import { CreateTaskDrawler } from './Components/modal/createTaskDrawler/createTaskDrawler';
+import { CreateTaskDrawler } from './Components/swipeableEdgeDrawer/createTaskDrawler/createTaskDrawler';
 
 export interface TemporaryDrawerProps extends Partial<ITask> {}
 const Tasks: FC<TemporaryDrawerProps> = ({ parentId = '0', subLevel = 0 }) => {

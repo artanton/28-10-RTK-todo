@@ -3,8 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Header, TextBlock, Link } from './RegisterPageStyled';
 import { useSelector } from 'react-redux';
 import { selectErrorMessage } from '../../redux/auth/selectors';
-// import { useNavigate } from "react-router-dom";
-// import { useAuth } from "../../Hooks";
+
 
 export default function Register() {
   const errorMessage = useSelector(selectErrorMessage);
