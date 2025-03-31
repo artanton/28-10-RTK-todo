@@ -39,22 +39,22 @@ With this Todo List application, you can:
 ### Header
 
 #### Non-Authorized User
-- Logo: Displays the application logo, redirects to the WelcomePage.
-- UserAuth: Button for redirecting to the SignInPage or SignUpPage.
+- Displays the WelcomePage button.
+- UserAuth buttons: Buttons for redirecting to the SignInPage or SignUpPage.
 
 #### Authorized User
-- Logo: Redirects to the HomePage for task management.
-- UserMenu: Dropdown menu with user options including profile settings and logout.
+- Displays the WelcomePage button.
+- UserMenu: Menu with user options including profile settings and logout.
 
 <div style="padding: 20px; max-width: 800px; margin: 0 auto;">
-    <img src="./src/img/screenshots/header.png" alt="Header Screenshot">
+    <img src="./assets/media/edituserbutton.png" alt="Header Screenshot">
 </div>
 
 ### Pages
 
 #### WelcomePage
 - Route: `/`
-- Introduction to the application with CTA buttons for login or registration.
+- Introduction to the application with  buttons for login or registration.
 <div style="padding: 20px; max-width: 800px; margin: 0 auto;">
     <img src="./assets/media/home.png" alt="Todo list app welcome page">
 </div>
