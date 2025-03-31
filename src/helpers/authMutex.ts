@@ -17,7 +17,7 @@ const baseQuery = fetchBaseQuery({
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);
     }
-    headers.set('Access-Control-Allow-Origin', '*');
+    // headers.set('Access-Control-Allow-Origin', '*');
     return headers;
   },
 });
@@ -36,10 +36,6 @@ export const customFetchBase: BaseQueryFn<
       const release = await mutex.acquire();
 
       try {
-        // const refreshToken = localStorage.getItem('refreshToken');
-        // if (!refreshToken) {
-        //   api.dispatch(removeUser());
-        // }
         const { data } = await baseQuery(
           {
             credentials: 'include',

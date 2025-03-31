@@ -1,6 +1,3 @@
-// import { logout } from '../../redux/auth/operators';
-// import { useDispatch } from 'react-redux';
-// import { AppDispatch } from '../../redux/store';
 import { useAuth } from '../../Hooks/useAuth';
 import { LogOutButton, LogOutMenu, Name, UserAvatar } from './UserMenuStyled';
 import { FC, useState } from 'react';
@@ -10,14 +7,12 @@ import { IUser } from '../../helpers/Auth.types';
 import { useLogoutMutation } from '../../redux/sliceApi';
 
 const baseURL = `${process.env.REACT_APP_API_URL}`;
-// const baseURL = 'https://recursive-todo-api-1.onrender.com'
 
 export const UserMenu: FC = () => {
-  // const dispatch = useDispatch<AppDispatch>();
   const { user } = useAuth() as { user: IUser };
-  // console.log(store.getState());
+
   const [showModal, setShowModal] = useState(false);
-  //   const [modalContent, setModalContent] = useState<React.ReactNode | null>(null);
+
   const [logout] = useLogoutMutation();
   const closeModal = () => {
     setShowModal(false);
