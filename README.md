@@ -32,7 +32,7 @@ With this Todo List application, you can:
   - [Main Features](#main-features)
 - [Modals](#modals)
   - [Task Management Modals](#task-management-modals)
-  - [Authorization Modals](#authorization-modals)
+  - [User Management Modal](#user-settings-modal)
 
 ## Components
 
@@ -55,21 +55,32 @@ With this Todo List application, you can:
 #### WelcomePage
 - Route: `/`
 - Introduction to the application with CTA buttons for login or registration.
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <img src="./assets/media/home.png" alt="Todo list app welcome page">
+</div>
 
 #### SignupPage
 - Route: `/signup`
 - Secure registration form with email validation.
 - Redirects to the HomePage upon successful signup and login.
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <img src="./assets/media/signup.png" alt="Todo list app signup page">
+</div>
 
 #### SigninPage
 - Route: `/signin`
 - Form for user authentication.
 - Displays error messages for invalid login attempts.
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <img src="./assets/media/signin.png" alt="Todo list app signin page">
+</div>
 
 #### HomePage
 - Route: `/tasks`
 - Displays a list of tasks with options to create, edit, delete, and manage nested subtasks.
-
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <img src="./assets/media/taskpage.png" alt="Todo list app tasks page">
+</div>
 
 
 ### Main Features
@@ -78,6 +89,7 @@ With this Todo List application, you can:
 3. Task Details: View and edit task properties.
 4. Secure Authentication: JWT-based token handling for login, logout, and session management.
 5. Email Verification: Validates user email during registration.
+6. Change user settings: Change avatar or password.
 
 ## Modals
 
@@ -86,18 +98,32 @@ With this Todo List application, you can:
 #### AddTaskModal
 - Allows users to add a new task or subtask.
 - Includes input fields for task name, description, and deadline.
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <img src="./assets/media/createtask.png" alt="Todo list app add task">
+</div>
 
 #### EditTaskModal
 - Enables users to edit existing tasks or subtasks.
-- Allows changing the task name, status, and priority.
+- Allows changing the task name, description, time.
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <img src="./assets/media/edittask.png" alt="Todo list app edit task">
+</div>
+
+#### ShowTaskModal
+- Shows the task details.
+
 
 #### DeleteTaskModal
 - Confirms task deletion and ensures no accidental loss of data.
 
+### User settings modal
 
-
-
-
+#### EditUserModal
+- Enables users to edit existing personal info.
+- Allows changing the avatar, password.
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <img src="./assets/media/edituser.png" alt="Todo list app edit task">
+</div>
 
 
 ## Technologies Used
